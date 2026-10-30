@@ -17,61 +17,7 @@ export type PageBlueprint = {
   decisions?: string[];
 };
 
-export const pageBlueprints: Record<
-  'home' | 'features' | 'pricing' | 'about' | 'contact',
-  PageBlueprint
-> = {
-  home: {
-    to: paths.home,
-    label: 'Home',
-    eyebrow: 'Home',
-    title: 'Less busywork. More meaningful work.',
-    lead: 'The homepage earns belief in ninety seconds: a clear promise, one honest product view, and a next step that is not a hard sell.',
-    meta: {
-      title: 'FlowPilot AI — Less busywork. More meaningful work.',
-      description:
-        'FlowPilot AI is a fictional AI productivity platform for founders and small teams. Marketing site foundation v0.1.',
-    },
-    sections: [
-      {
-        title: 'Hero — promise + product frame',
-        note: 'Positioning headline, one sentence of who it is for, primary and secondary CTA, and a cropped product frame that shows the daily command centre.',
-        tag: 'Product UI',
-      },
-      {
-        title: 'Three outcomes',
-        note: 'Decide what is next. Automate the repeatable. Protect focus time. Outcome language, not feature inventory.',
-      },
-      {
-        title: 'Narrative: decide → automate → protect',
-        note: 'Three alternating sections, each with a real interface crop and one precise claim. No walls of icons.',
-        tag: 'Product UI',
-      },
-      {
-        title: 'How it works in three steps',
-        note: 'Connect your tools, set your priorities, review the plan each morning. Numbered, calm, skimmable.',
-      },
-      {
-        title: 'Principles instead of borrowed credibility',
-        note: 'No invented logos or testimonials. A labelled principles band and a plain statement that FlowPilot is a fictional product.',
-        tag: 'Content policy',
-      },
-      {
-        title: 'Pricing preview + FAQ',
-        note: 'Three sample tiers with a link to the full comparison, then four objection-handling questions.',
-      },
-      {
-        title: 'Closing CTA',
-        note: 'Single, quiet conversion band on ink navy with the primary action repeated once.',
-      },
-    ],
-    decisions: [
-      'Approve the stack and design foundation before composition starts.',
-      'Confirm the primary CTA destination and its label ("Start free" → contact form).',
-      'Confirm how the fictional nature of the product is disclosed (footer note, caption, or both).',
-    ],
-  },
-
+export const pageBlueprints: Record<'features' | 'pricing' | 'about' | 'contact', PageBlueprint> = {
   features: {
     to: paths.features,
     label: 'Features',

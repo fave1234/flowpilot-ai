@@ -1,84 +1,66 @@
-# 05 — Decisions needed before the homepage build
+# 05 — Decisions and resolution log
 
-Each item states the current default (already in the code), the alternative, and the cost of changing
-your mind later. Only the first three are blocking; the rest can be answered during the page build.
+## Resolved (approved)
 
-## Blocking
+| #   | Decision             | Resolution                                                                                                                                                                            |
+| --- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Frontend stack       | **Approved:** Vite + React 19 + TypeScript + Tailwind v4. SSR trade-off accepted — the site stays `noindex`, so client-side metadata is acceptable. Do not switch frameworks.         |
+| 2   | Typography           | **Approved:** Manrope for display, Inter for interface.                                                                                                                               |
+| 3   | Design system        | **Approved,** including `#6A56EE` for buttons and `#666C80` for captions (both AA).                                                                                                   |
+| 4   | Primary CTA          | **"Start for free" → `/contact`.** This is a conversion-focused portfolio concept; the brief's label wins over the more conservative "Request access".                                |
+| 5   | Disclosure           | Footer line + mockup captions + `noindex` only. No in-hero notice — the hero stays clean and conversion-focused.                                                                      |
+| 6   | Trust section        | Communicated through audience definitions, capability statements and generic security messaging, plus an "Illustrative concept" note. No logos, quotes, benchmarks or certifications. |
+| 7   | Homepage composition | Built in the order specified: hero → trust → problem/solution → four features → how it works → showcase → pricing preview → FAQ → final CTA → footer.                                 |
 
-### 1. Frontend stack — Vite + React + Tailwind (current) vs Next.js
+## Implemented decisions (homepage build)
 
-- **Current:** Vite 8 SPA, static output, client-side metadata.
-- **Alternative:** Next.js App Router for per-route static HTML (better SEO, heavier tooling).
-- **Trade-off:** the SPA is faster to iterate and simpler to maintain; SEO needs a prerender step or a
-  migration later. Components port almost unchanged.
-- **Recommendation:** stay on Vite, add prerendering before a real launch.
+- **Dark band budget:** three ink bands (hero, showcase, closing CTA) separated by at least two light
+  bands. Showcase uses a dark band so the analytics frame reads as a distinct, deeper view rather than
+  a repeat of the hero.
+- **Mockup depth:** full dashboard in the hero, full analytics view in the showcase, and four
+  single-region crops for the features. No frame repeats the whole app twice.
+- **Header over the hero:** the header is ink while it sits on the hero and flips to the light
+  treatment after 8 px of scroll (it occupies layout space, so a transparent header would have left a
+  light strip above the hero).
+- **Frame text floor:** 12 px. Detail is removed rather than shrunk; sidebars and secondary panels
+  drop out at tablet instead of compressing the primary view.
 
-### 2. Typography — Manrope + Inter (current) vs a single family
+## Still open (non-blocking)
 
-- **Current:** Manrope for display/headings, Inter for body/UI. Familiar pairing, strong hierarchy.
-- **Alternative:** Inter only (more uniform, less distinctive) or Manrope only (warmer, less legible
-  in dense UI at 13 px).
-- **Recommendation:** keep the pairing. It is the cheapest way to look designed rather than templated.
+These can be answered during the remaining page builds. Each item states the current default in code.
 
-### 3. Primary CTA destination and label
+### Integrations on the Features page
 
-- **Current:** "Start free" → `/contact` (the only page that can accept intent). No signup page exists.
-- **Alternatives:** "Book a walkthrough" → `/contact` (more honest for a fictional product);
-  "Request access" → `/contact`; or add a lightweight `/signup` route.
-- **Note:** "Start free" implies a working product. If honesty is the priority, "Request access" is the
-  safer label.
+- **Current plan:** generic category chips (calendar, docs, chat, tasks) — no partner logos.
+- **Alternative:** omit the band and lean on the automation narrative instead.
 
-## Confirm during the build
+### Pricing presentation
 
-### 4. How loudly the demo nature is disclosed
+- **Current:** USD only, "per seat / month", three tiers (Starter $0, Team $18, Scale $39), labelled
+  illustrative on the homepage preview.
+- **Open:** a currency switcher (USD/GBP/CAD), annual framing ("two months free" vs "save 17%"), and
+  whether the full pricing page keeps the same tier names.
 
-Current: footer line on every page + `<meta name="robots" content="noindex">` + captions on mockups +
-the homepage's foundation notice.
-Options: add a one-line notice in the hero, or keep disclosure to footer/captions only (more
-"in character").
+### About page framing
 
-### 5. Integrations on the Features page
+- **Current plan:** in-character product story, clearly fictional, plus a short "how this site was
+  designed" note and labelled team placeholders.
+- **Alternative:** present the whole site openly as a design case study (changes tone site-wide).
 
-Current plan: generic category chips (calendar, docs, chat, tasks).
-Alternative: omit the band entirely. Fabricated partner logos are **not** an option per the content
-rules.
+### Contact form behaviour
 
-### 6. Pricing presentation
+- **Current plan:** client-side validation only; the success state states plainly that nothing was
+  sent.
+- **If real delivery is wanted:** an endpoint (Resend, Formspree or an API route) and reviewed consent
+  copy. Not recommended until the concept is approved.
 
-- Currency: USD only with a note (current plan) vs USD/GBP/CAD switcher.
-- Annual framing: "two months free" vs "save 17%".
-- Tier names: Starter / Team / Scale vs Solo / Studio / Scale.
+### Analytics and tracking
 
-### 7. About page framing
+- **Current:** none. If required, a cookieless tool plus one line in the footer. Not recommended for a
+  fictional demo.
 
-Current plan: in-character product story, clearly fictional, plus a short "how this site was designed"
-note and labelled team placeholders.
-Alternative: present the whole site openly as a design case study (changes tone across the site).
+### Logo and favicon
 
-### 8. Contact form behaviour
-
-Current: client-side validation only; success state explicitly says nothing was sent.
-If you want real delivery we need an endpoint (Formspree/Resend/API route) plus a privacy note — and
-the consent copy must be reviewed first.
-
-### 9. Product mockup depth on the homepage
-
-Current plan: three half-frames (task list + suggestion, automation rules, focus chart) rather than
-the full app repeated. Alternative: one large full-width frame in the hero and text-only narrative
-sections below. The first reads more editorial; the second is bolder but risks legibility.
-
-### 10. Dark band budget on the homepage
-
-Current plan: two ink bands (principles/honesty + closing CTA). Alternative: one (closing only) for a
-lighter, more editorial page.
-
-### 11. Analytics and tracking
-
-Current: none. If required, add a cookieless tool (e.g. Plausible) and a short privacy line in the
-footer. Not recommended for a fictional demo.
-
-### 12. Logo and favicon
-
-Current: a flight-path chevron with a violet crossbar and a soft-blue beacon (SVG, used in header and
-favicon). Alternatives: a monogram tile or a typographic "FP" mark. Easy to swap later — one component
-plus `public/favicon.svg`.
+- **Current:** flight-path chevron with a violet crossbar and a soft-blue beacon, used in the header,
+  product chrome and `public/favicon.svg`.
+- **Alternative:** a monogram tile or a typographic "FP" mark. Cheap to swap.

@@ -185,7 +185,7 @@ Sizes: `sm` 36 px · `md` 44 px · `lg` 48 px. Radius 10 px. Focus: 2 px `brand-
 offset (`halo-300` on ink). Icons are 16 px and inherit `currentColor`; arrow icons translate 2 px on
 hover. Disabled: 50% opacity, pointer events off.
 
-Rules: sentence case labels, 2–4 words, verbs first ("Start free", "Explore the design system").
+Rules: sentence case labels, 2–4 words, verbs first ("Start for free", "Explore the design system").
 Never two `primary` buttons in the same visual band.
 
 ### Cards (`Card`)
@@ -221,6 +221,11 @@ blur. Desktop: centred pill nav; active item is a white pill with `e1`. Mobile: 
 button, panel with 56 px rows, primary CTA at the end, scroll lock, `Escape` to close, auto-close on
 route change and on desktop breakpoint.
 
+**Over a dark band:** the header inverts (light logo, translucent white nav pill, white menu button)
+and shares the band's background. It flips back to the light treatment after 8 px of scroll. Because
+a sticky header occupies layout space, a transparent header over the ink hero would leave a light
+strip above it — the ink background is deliberate.
+
 ---
 
 ## 6. Product mockup language
@@ -230,7 +235,12 @@ The interface frame (`components/product/AppWindow.tsx`) is the signature visual
 - Built from DOM and SVG — sharp at any density, styled by the same tokens, no image payload.
 - Composition: window chrome → sidebar → primary view → secondary panel. Panels drop out at smaller
   widths rather than shrinking text.
+- Three frame variants share the same atoms: `DashboardWindow` (hero command centre),
+  `ShowcaseWindow` (analytics: icon rail, tabs, line chart, table) and the four `FeatureCrops`
+  (one region each).
 - Content is realistic but generic: "Studio North", "Finalise pricing brief v2", dates, durations.
+- Text never goes below 12 px. Below that, replace detail with an abstract row rather than shrinking
+  the type.
 - **Never interactive:** `aria-hidden`, `pointer-events-none`, no focusable controls. Anything that
   would be a button is a styled span.
 - Camera rules per section: one region per frame (a task list, a rule card, the suggestion panel), not

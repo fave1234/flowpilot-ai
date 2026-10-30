@@ -18,34 +18,44 @@ moment and the footer). No two dark bands adjacent.
 
 ## Conversion map
 
-| Page     | Primary CTA                    | Secondary                       | Notes                                       |
-| -------- | ------------------------------ | ------------------------------- | ------------------------------------------- |
-| Home     | Start free → `/contact`        | See how it works → `/features`  | Repeated once in the closing band           |
-| Features | Start free → `/contact`        | View pricing → `/pricing`       | Per-capability anchors, no per-feature CTAs |
-| Pricing  | Start free → `/contact?plan=…` | Talk to us → `/contact`         | Plan choice pre-selects the contact topic   |
-| About    | Start free → `/contact`        | Read the features → `/features` | No newsletter sign-up                       |
-| Contact  | Send message (demo)            | Back to features                | Success state states nothing was sent       |
+| Page     | Primary CTA                        | Secondary                       | Notes                                       |
+| -------- | ---------------------------------- | ------------------------------- | ------------------------------------------- |
+| Home     | Start for free → `/contact`        | See how it works → `/features`  | Repeated once in the closing band           |
+| Features | Start for free → `/contact`        | View pricing → `/pricing`       | Per-capability anchors, no per-feature CTAs |
+| Pricing  | Start for free → `/contact?plan=…` | Talk to us → `/contact`         | Plan choice pre-selects the contact topic   |
+| About    | Start for free → `/contact`        | Read the features → `/features` | No newsletter sign-up                       |
+| Contact  | Send message (demo)                | Back to features                | Success state states nothing was sent       |
 
 ---
 
-## Home
+## Home — built
 
 **Job:** earn belief in 90 seconds, then get out of the way.
 
-| #   | Section                | Content intent                                                      | Visual                                                       |
-| --- | ---------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ |
-| 1   | Hero                   | Positioning line, one sentence of audience, primary + secondary CTA | `display-1` headline, product frame cropped at the fold      |
-| 2   | Three outcomes         | Decide what is next · automate the repeatable · protect focus       | Three text blocks, hairline dividers, no icons-as-decoration |
-| 3   | Narrative 1 — Decide   | The morning plan: what matters today and why                        | Half-frame: suggestion panel + task list                     |
-| 4   | Narrative 2 — Automate | Rules that remove handoffs, reversible by default                   | Half-frame: automation rule cards + toggle states            |
-| 5   | Narrative 3 — Protect  | Focus blocks, notification batching, meeting hygiene                | Chart/marks frame, restrained                                |
-| 6   | How it works           | Connect → prioritise → review each morning (three steps)            | Numbered list, one horizontal rule                           |
-| 7   | Principles / honesty   | Labelled statement of what is and is not real                       | Ink band, three short principles                             |
-| 8   | Pricing preview        | Three tiers, one highlighted, link to full page                     | Small cards, no toggle here                                  |
-| 9   | FAQ                    | Four objections: switching, data, price, AI reliability             | Accordion                                                    |
-| 10  | Closing CTA            | Single violet button, one line of copy                              | Ink band                                                     |
+The homepage is implemented. Rhythm: ink → surface → canvas → surface → canvas → ink → surface →
+canvas → ink → footer.
 
-_Mobile:_ hero frame crops to the task list only; narrative frames become stacked text + cropped frame.
+| #   | Section            | Implementation                                                                                              | Tone    |
+| --- | ------------------ | ----------------------------------------------------------------------------------------------------------- | ------- |
+| 1   | Hero               | `components/home/Hero.tsx` — headline, dual CTA, full-width dashboard frame (`product/DashboardWindow.tsx`) | ink     |
+| 2   | Trust band         | `TrustBand.tsx` — four audience/security statements + "illustrative concept" note                           | surface |
+| 3   | Problem & solution | `ProblemSolution.tsx` — three pain points, sticky ink workspace card                                        | canvas  |
+| 4   | Four core features | `CoreFeatures.tsx` + `product/FeatureCrops.tsx` — one interface region per capability                       | surface |
+| 5   | How it works       | `HowItWorks.tsx` — three numbered steps on a hairline rule                                                  | canvas  |
+| 6   | Product showcase   | `Showcase.tsx` + `product/ShowcaseWindow.tsx` — analytics view, bleeds right on desktop                     | ink     |
+| 7   | Pricing preview    | `PricingPreview.tsx` — three illustrative tiers, middle recommended                                         | surface |
+| 8   | FAQ                | `FaqSection.tsx` — seven questions, first open                                                              | canvas  |
+| 9   | Final CTA          | `FinalCta.tsx` — centred closing action                                                                     | ink     |
+| 10  | Footer             | `layout/SiteFooter.tsx` — demo disclosure + navigation                                                      | ink-950 |
+
+**Rules applied in the frames**
+
+- No text below 12px; detail is removed rather than shrunk.
+- Sidebar and secondary panels drop out at tablet instead of compressing the main view.
+- Every frame is `aria-hidden`, `pointer-events-none` and contains zero focusable elements.
+- Each frame is captioned with an `Illustrative interface…` figcaption; feature crops repeat the
+  label at block level.
+- The header is ink while it sits over the hero and flips to the light treatment after 8px of scroll.
 
 ## Features
 

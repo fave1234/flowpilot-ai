@@ -24,6 +24,9 @@ export function SiteHeader() {
   useEffect(() => setMenuOpen(false), [pathname]);
 
   const solid = scrolled || menuOpen;
+  // The homepage hero is ink navy: the header starts light-on-dark and flips to
+  // the standard light treatment as soon as it leaves the hero.
+  const overDark = pathname === paths.home && !solid;
 
   return (
     <header
@@ -31,14 +34,21 @@ export function SiteHeader() {
         'sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-[var(--duration-base)]',
         solid
           ? 'border-b border-line bg-canvas/88 shadow-[0_1px_0_rgb(255_255_255/0.6)] backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent',
+          : overDark
+            ? 'border-b border-transparent bg-ink-900'
+            : 'border-b border-transparent bg-transparent',
       )}
     >
       <Container className="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
-        <Logo />
+        <Logo tone={overDark ? 'inverse' : 'default'} />
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-0.5 rounded-full border border-line bg-surface/80 p-1 shadow-e1 backdrop-blur">
+          <ul
+            className={cn(
+              'flex items-center gap-0.5 rounded-full border p-1 shadow-e1 backdrop-blur transition-colors duration-[var(--duration-base)]',
+              overDark ? 'border-white/12 bg-white/[0.06]' : 'border-line bg-surface/80',
+            )}
+          >
             {primaryNav.map((item) => (
               <li key={item.to}>
                 <NavLink
@@ -46,7 +56,13 @@ export function SiteHeader() {
                   className={({ isActive }) =>
                     cn(
                       'flex h-8 items-center rounded-full px-4 text-body-sm font-medium transition-[background-color,color,box-shadow] duration-[var(--duration-fast)]',
-                      isActive ? 'bg-canvas text-fg shadow-e1' : 'text-fg-muted hover:text-fg',
+                      overDark
+                        ? isActive
+                          ? 'bg-white/12 text-white'
+                          : 'text-mist-300 hover:text-white'
+                        : isActive
+                          ? 'bg-canvas text-fg shadow-e1'
+                          : 'text-fg-muted hover:text-fg',
                     )
                   }
                 >
@@ -58,7 +74,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <ButtonLink to={paths.designSystem} variant="ghost" size="sm">
+          <ButtonLink
+            to={paths.designSystem}
+            variant="ghost"
+            size="sm"
+            className={cn(overDark && 'text-mist-300 hover:bg-white/5 hover:text-white')}
+          >
             Design system
           </ButtonLink>
           <ButtonLink to={primaryCta.to} size="sm" className="pl-4">
@@ -75,7 +96,12 @@ export function SiteHeader() {
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
           onClick={() => setMenuOpen((open) => !open)}
-          className="grid size-10 place-items-center rounded-md border border-line bg-surface text-fg shadow-e1 transition-colors hover:bg-mist-50 lg:hidden"
+          className={cn(
+            'grid size-10 place-items-center rounded-md border shadow-e1 transition-colors lg:hidden',
+            overDark
+              ? 'border-white/15 bg-white/5 text-white hover:bg-white/10'
+              : 'border-line bg-surface text-fg hover:bg-mist-50',
+          )}
         >
           {menuOpen ? (
             <X aria-hidden="true" className="size-5" />

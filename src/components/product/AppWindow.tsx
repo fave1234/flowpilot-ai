@@ -57,17 +57,17 @@ function WindowChrome() {
         <span className="size-2 rounded-full bg-mist-300" />
       </div>
 
-      <div className="mx-auto hidden h-7 w-full max-w-72 items-center gap-2 rounded-md border border-line bg-surface px-2.5 text-[11px] text-fg-subtle sm:flex">
+      <div className="mx-auto hidden h-7 w-full max-w-72 items-center gap-2 rounded-md border border-line bg-surface px-2.5 text-xs text-fg-subtle sm:flex">
         <Search className="size-3.5" />
         <span>Search or jump to…</span>
-        <kbd className="ml-auto rounded border border-line bg-mist-50 px-1 font-sans text-[10px] text-fg-subtle">
+        <kbd className="ml-auto rounded border border-line bg-mist-50 px-1 font-sans text-xs text-fg-subtle">
           ⌘K
         </kbd>
       </div>
 
       <div className="ml-auto flex items-center gap-2 sm:ml-0">
         <Bell className="size-3.5 text-fg-subtle" />
-        <span className="grid size-6 place-items-center rounded-full bg-ink-900 text-[10px] font-semibold text-white">
+        <span className="grid size-6 place-items-center rounded-full bg-ink-900 text-xs font-semibold text-white">
           AM
         </span>
       </div>
@@ -87,7 +87,7 @@ function Sidebar() {
   return (
     <div className="hidden w-48 shrink-0 flex-col border-r border-line bg-mist-50/70 p-3 md:flex lg:w-52">
       <div className="flex items-center gap-2 rounded-md px-1.5 py-1.5">
-        <span className="grid size-5 place-items-center rounded-[5px] bg-ink-900 text-[9px] font-bold text-white">
+        <span className="grid size-5 place-items-center rounded-[5px] bg-ink-900 text-xs font-bold text-white">
           N
         </span>
         <span className="text-[12px] font-semibold text-ink-800">Studio North</span>
@@ -106,7 +106,7 @@ function Sidebar() {
             <Icon className={cn('size-3.5', active ? 'text-brand-600' : 'text-fg-subtle')} />
             {label}
             {badge && (
-              <span className="ml-auto rounded bg-brand-100 px-1 text-[10px] font-semibold text-brand-800">
+              <span className="ml-auto rounded bg-brand-100 px-1 text-xs font-semibold text-brand-800">
                 {badge}
               </span>
             )}
@@ -117,11 +117,11 @@ function Sidebar() {
       <div className="mt-6 rounded-md border border-brand-100 bg-white p-2.5">
         <div className="flex items-center gap-1.5">
           <span className="size-1.5 rounded-full bg-brand-500" />
-          <span className="text-[10px] font-semibold tracking-wide text-brand-800 uppercase">
+          <span className="text-xs font-semibold tracking-wide text-brand-800 uppercase">
             Focus block
           </span>
         </div>
-        <p className="mt-1.5 text-[11px] text-ink-600">09:30 – 11:00</p>
+        <p className="mt-1.5 text-xs text-ink-600">09:30 – 11:00</p>
         <div className="mt-2 h-1 overflow-hidden rounded-full bg-mist-200">
           <div className="h-full w-2/5 rounded-full bg-brand-500" />
         </div>
@@ -129,10 +129,10 @@ function Sidebar() {
 
       <div className="mt-auto pt-4">
         <div className="flex items-center gap-2 rounded-md border border-line bg-surface px-2 py-1.5">
-          <span className="grid size-5 place-items-center rounded-full bg-halo-200 text-[9px] font-semibold text-ink-700">
+          <span className="grid size-5 place-items-center rounded-full bg-halo-200 text-xs font-semibold text-ink-700">
             JL
           </span>
-          <span className="text-[11px] text-ink-600">Jamie Lee</span>
+          <span className="text-xs text-ink-600">Jamie Lee</span>
         </div>
       </div>
     </div>
@@ -160,10 +160,10 @@ function TodayView() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="font-display text-[17px] leading-tight font-bold text-ink-900">Today</h3>
-          <p className="mt-0.5 text-[11px] text-fg-subtle">Tuesday, 14 October · 4 tasks</p>
+          <p className="mt-0.5 text-xs text-fg-subtle">Tuesday, 14 October · 4 tasks</p>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="hidden items-center gap-1 rounded-md border border-line bg-surface px-2 py-1 text-[11px] font-medium text-ink-600 sm:flex">
+          <span className="hidden items-center gap-1 rounded-md border border-line bg-surface px-2 py-1 text-xs font-medium text-ink-600 sm:flex">
             <Plus className="size-3" />
             New
           </span>
@@ -184,31 +184,29 @@ function TodayView() {
           </span>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11.5px] font-semibold text-ink-900">Suggested focus</span>
-              <span className="rounded bg-white/80 px-1.5 py-px text-[9.5px] font-medium text-brand-800">
+              <span className="text-xs font-semibold text-ink-900">Suggested focus</span>
+              <span className="rounded bg-white/80 px-1.5 py-px text-xs font-medium text-brand-800">
                 Illustrative
               </span>
             </div>
-            <p className="mt-1 text-[11.5px] leading-relaxed text-ink-600">
+            <p className="mt-1 text-xs leading-relaxed text-ink-600">
               Start with the pricing brief — it unblocks the homepage copy and two reviews.
             </p>
             <div className="mt-2 flex items-center gap-1.5">
-              <span className="rounded bg-ink-900 px-2 py-1 text-[10.5px] font-medium text-white">
+              <span className="rounded bg-ink-900 px-2 py-1 text-xs font-medium text-white">
                 Accept
               </span>
-              <span className="rounded px-2 py-1 text-[10.5px] font-medium text-ink-500">
-                Dismiss
-              </span>
+              <span className="rounded px-2 py-1 text-xs font-medium text-ink-500">Dismiss</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-5 flex items-center justify-between">
-        <span className="text-[10px] font-semibold tracking-[0.1em] text-fg-subtle uppercase">
+        <span className="text-xs font-semibold tracking-[0.1em] text-fg-subtle uppercase">
           Up next
         </span>
-        <span className="text-[10.5px] text-fg-subtle">3h 20m planned</span>
+        <span className="text-xs text-fg-subtle">3h 20m planned</span>
       </div>
 
       <ul className="mt-1 divide-y divide-line/80">
@@ -224,16 +222,16 @@ function TodayView() {
             </span>
             <span
               className={cn(
-                'truncate text-[11.5px]',
+                'truncate text-xs',
                 task.done ? 'text-fg-subtle line-through' : 'font-medium text-ink-800',
               )}
             >
               {task.title}
             </span>
-            <span className="hidden shrink-0 rounded bg-mist-200/80 px-1.5 py-px text-[9.5px] font-medium text-ink-500 sm:inline">
+            <span className="hidden shrink-0 rounded bg-mist-200/80 px-1.5 py-px text-xs font-medium text-ink-500 sm:inline">
               {task.project}
             </span>
-            <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10.5px] text-fg-subtle">
+            <span className="ml-auto flex shrink-0 items-center gap-1.5 text-xs text-fg-subtle">
               {task.priority === 'high' && <span className="size-1.5 rounded-full bg-brand-500" />}
               {task.due}
             </span>
@@ -255,17 +253,17 @@ function RightPanel() {
     <div className="hidden w-60 shrink-0 flex-col gap-5 border-l border-line bg-mist-50/60 p-3.5 2xl:flex">
       <div>
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-semibold tracking-[0.1em] text-fg-subtle uppercase">
+          <span className="text-xs font-semibold tracking-[0.1em] text-fg-subtle uppercase">
             Automations
           </span>
-          <span className="text-[10px] text-fg-subtle">2 active</span>
+          <span className="text-xs text-fg-subtle">2 active</span>
         </div>
 
         <div className="mt-2.5 flex flex-col gap-2">
           {automations.map((rule) => (
             <div key={rule.title} className="rounded-md border border-line bg-surface p-2.5">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-[11px] leading-snug font-medium text-ink-800">{rule.title}</p>
+                <p className="text-xs leading-snug font-medium text-ink-800">{rule.title}</p>
                 <span
                   className={cn(
                     'relative mt-0.5 h-3.5 w-6 shrink-0 rounded-full transition-colors',
@@ -280,14 +278,14 @@ function RightPanel() {
                   />
                 </span>
               </div>
-              <p className="mt-1 text-[10px] text-fg-subtle">{rule.meta}</p>
+              <p className="mt-1 text-xs text-fg-subtle">{rule.meta}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div>
-        <span className="text-[10px] font-semibold tracking-[0.1em] text-fg-subtle uppercase">
+        <span className="text-xs font-semibold tracking-[0.1em] text-fg-subtle uppercase">
           Focus time
         </span>
         <div className="mt-3 flex h-20 items-end gap-1.5">
@@ -300,7 +298,7 @@ function RightPanel() {
                 className={cn('w-full rounded-sm', index === 3 ? 'bg-brand-500' : 'bg-halo-300')}
                 style={{ height }}
               />
-              <span className="text-[9px] text-fg-subtle">{['M', 'T', 'W', 'T', 'F'][index]}</span>
+              <span className="text-xs text-fg-subtle">{['M', 'T', 'W', 'T', 'F'][index]}</span>
             </div>
           ))}
         </div>

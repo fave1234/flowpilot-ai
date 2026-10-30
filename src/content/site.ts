@@ -20,7 +20,7 @@ export const primaryNav: NavItem[] = [
 ];
 
 /** Single source of truth for the primary conversion action. */
-export const primaryCta: NavItem = { label: 'Start free', to: paths.contact };
+export const primaryCta: NavItem = { label: 'Start for free', to: paths.contact };
 export const secondaryCta: NavItem = { label: 'See how it works', to: paths.features };
 
 export const footerNav: { heading: string; items: NavItem[] }[] = [

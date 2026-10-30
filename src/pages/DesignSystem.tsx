@@ -198,7 +198,8 @@ const inventory = {
     'Accordion, TextLink, Logo',
     'Sticky header + mobile navigation',
     'Footer, 404, SEO helper',
-    'Product frame illustration',
+    'Hero dashboard frame + analytics frame',
+    'Four feature crops (automation, board, collaboration, insights)',
   ],
   planned: [
     'Segmented toggle (pricing cadence)',

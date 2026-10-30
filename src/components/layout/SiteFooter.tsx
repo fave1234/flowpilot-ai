@@ -7,7 +7,7 @@ import { Container } from './Container';
 
 export function SiteFooter() {
   return (
-    <footer className="bg-ink-950 text-mist-300">
+    <footer className="border-t border-white/10 bg-ink-950 text-mist-300">
       <Container className="py-14 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_repeat(3,1fr)] lg:gap-10">
           <div className="max-w-sm">

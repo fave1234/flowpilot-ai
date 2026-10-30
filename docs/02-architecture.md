@@ -56,7 +56,8 @@ src/
 ├─ config/paths.ts             # Route table (no string literals in components)
 ├─ content/
 │  ├─ site.ts                  # Name, tagline, nav, footer nav, CTA targets
-│  └─ blueprints.ts            # Page composition plans + per-page decisions
+│  ├─ home.ts                  # Homepage content model (hero, trust, features, pricing, FAQ)
+│  └─ blueprints.ts            # Composition plans for the four interior pages
 ├─ lib/
 │  ├─ cn.ts                    # clsx + tailwind-merge
 │  ├─ usePageMeta.ts           # Title/description/OG updates per route
@@ -65,7 +66,9 @@ src/
 │  ├─ layout/                  # Container, Section, SiteHeader (+ mobile nav), SiteFooter
 │  ├─ ui/                      # Button, Badge, Card, Eyebrow, SectionHeading, Field, Input,
 │  │                           # Textarea, Select, Checkbox, Accordion, TextLink, Logo
-│  └─ product/AppWindow.tsx    # Illustrative product interface
+│  ├─ home/                    # One component per homepage section (Hero → FinalCta)
+│  └─ product/                 # Frame atoms, DashboardWindow, ShowcaseWindow,
+│                              # FeatureCrops, AppWindow (design-system reference)
 └─ pages/                      # Home, Features, Pricing, About, Contact, DesignSystem, NotFound,
                                # BlueprintPage (shared interior-page placeholder)
 ```
@@ -95,9 +98,9 @@ Changing a token changes every page. There is one place to rebrand.
 | Route            | Purpose                             | Primary CTA                            |
 | ---------------- | ----------------------------------- | -------------------------------------- |
 | `/`              | Homepage (blueprint until approved) | Explore the design system (foundation) |
-| `/features`      | Capability story                    | Start free                             |
-| `/pricing`       | Tiers + FAQ                         | Start free                             |
-| `/about`         | Company / method                    | Start free                             |
+| `/features`      | Capability story                    | Start for free                         |
+| `/pricing`       | Tiers + FAQ                         | Start for free                         |
+| `/about`         | Company / method                    | Start for free                         |
 | `/contact`       | Working enquiry form                | Send message (demo)                    |
 | `/design-system` | Living reference (internal)         | Back to foundation                     |
 | `*`              | 404 with recovery link              | Back to foundation                     |
@@ -110,6 +113,8 @@ Changing a token changes every page. There is one place to rebrand.
 ## 6. Accessibility approach
 
 - Semantic landmarks: single `<h1>` per page, `<header>`, `<main id="main">`, `<footer>`, skip link.
+- The homepage header is ink over the hero and flips to the light treatment after 8 px of scroll, so
+  contrast holds in both states.
 - Keyboard: focus-visible ring system (2px brand, 3px offset), mobile menu closes on `Escape`, locks
   body scroll, and closes when the viewport becomes desktop; focus moves into the panel on open.
 - Forms: persistent visible labels, `aria-describedby` wiring through `Field`, `aria-invalid` on error.
@@ -122,14 +127,16 @@ Changing a token changes every page. There is one place to rebrand.
 
 | Asset  | Size                               |
 | ------ | ---------------------------------- |
-| CSS    | 46.7 KB raw / **8.9 KB gzip**      |
-| JS     | 364 KB raw / **111.5 KB gzip**     |
+| CSS    | 52.4 KB raw / **9.8 KB gzip**      |
+| JS     | 407.5 KB raw / **121.2 KB gzip**   |
 | Fonts  | 73 KB (two variable latin subsets) |
 | Images | none (product art is DOM/SVG)      |
 
-Notes and next steps: 111 KB gzipped is acceptable for a React SPA but not lean by marketing-site
-standards. Planned for the page build phase: route-level `React.lazy` (design system and the pages
-off the critical path), and if needed a pre-render step. No image payload means LCP is text-bound.
+Notes and next steps: 121 KB gzipped is acceptable for a React SPA but not lean by marketing-site
+standards. Planned before launch: route-level `React.lazy` (design system and interior pages are off
+the critical path) and, if needed, a pre-render step. There is no image payload — the product frames
+are DOM — so LCP is text-bound and CLS is protected by the pre-set canvas colour and size-stable
+frames.
 
 ## 8. Quality gates
 
