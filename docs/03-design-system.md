@@ -230,7 +230,7 @@ strip above it — the ink background is deliberate.
 
 ## 6. Product mockup language
 
-The interface frame (`components/product/AppWindow.tsx`) is the signature visual asset.
+The interface frames (`components/product/`) are the signature visual asset.
 
 - Built from DOM and SVG — sharp at any density, styled by the same tokens, no image payload.
 - Composition: window chrome → sidebar → primary view → secondary panel. Panels drop out at smaller

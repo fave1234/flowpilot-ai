@@ -67,8 +67,8 @@ src/
 │  ├─ ui/                      # Button, Badge, Card, Eyebrow, SectionHeading, Field, Input,
 │  │                           # Textarea, Select, Checkbox, Accordion, TextLink, Logo
 │  ├─ home/                    # One component per homepage section (Hero → FinalCta)
-│  └─ product/                 # Frame atoms, DashboardWindow, ShowcaseWindow,
-│                              # FeatureCrops, AppWindow (design-system reference)
+│  └─ product/                 # Frame atoms, DashboardWindow (hero), ShowcaseWindow
+│                              # (showcase), FeatureCrops (features)
 └─ pages/                      # Home, Features, Pricing, About, Contact, DesignSystem, NotFound,
                                # BlueprintPage (shared interior-page placeholder)
 ```

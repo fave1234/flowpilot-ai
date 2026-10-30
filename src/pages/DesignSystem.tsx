@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ArrowRight, Check, CircleDashed, Info, Minus } from 'lucide-react';
 import { usePageMeta } from '@/lib/usePageMeta';
 import { Section } from '@/components/layout/Section';
-import { AppWindow } from '@/components/product/AppWindow';
+import { DashboardWindow } from '@/components/product/DashboardWindow';
 import { Badge } from '@/components/ui/Badge';
 import { Button, ButtonLink, buttonStyles } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -640,10 +640,10 @@ export function DesignSystem() {
                 id="product-ui"
                 eyebrow="09 · Product language"
                 title="Mockups built from the same tokens"
-                description="Interface frames are DOM, not screenshots: they stay sharp at any size, respect the type system and can be cropped per section. They are decorative — no working controls, always captioned."
+                description="Interface frames are DOM, not screenshots: they stay sharp at any size, respect the type system and can be cropped per section. Three variants ship — the dashboard (homepage hero), the insights view (showcase) and four single-region crops (features). They are decorative: no working controls, never below 12px, always captioned."
               >
                 <div className="rounded-xl border border-line bg-mist-200/60 p-4 sm:p-6">
-                  <AppWindow />
+                  <DashboardWindow />
                 </div>
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-3">
