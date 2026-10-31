@@ -16,7 +16,7 @@ const icons = {
  */
 export function TrustBand() {
   return (
-    <Section tone="surface" spacing="md">
+    <Section reveal tone="surface" spacing="md">
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.55fr] lg:gap-16">
         <div>
           <Eyebrow>{trust.eyebrow}</Eyebrow>

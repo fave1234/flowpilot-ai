@@ -13,7 +13,7 @@ const callouts = [
 
 export function Showcase() {
   return (
-    <Section tone="ink" spacing="lg">
+    <Section reveal tone="ink" spacing="lg">
       <div className="grid items-center gap-12 lg:grid-cols-[0.68fr_1.32fr] lg:gap-14">
         <div className="max-w-md">
           <Eyebrow tone="inverse">A deeper look</Eyebrow>

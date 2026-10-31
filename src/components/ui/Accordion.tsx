@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 export type AccordionItem = {
   question: string;
@@ -11,13 +12,19 @@ type AccordionProps = {
   items: AccordionItem[];
   defaultOpenIndex?: number | null;
   className?: string;
+  revealItems?: boolean;
 };
 
 /**
  * Single-open disclosure list built on buttons with aria-expanded/aria-controls.
  * Panels are removed from the accessibility tree when closed.
  */
-export function Accordion({ items, defaultOpenIndex = null, className }: AccordionProps) {
+export function Accordion({
+  items,
+  defaultOpenIndex = null,
+  className,
+  revealItems = false,
+}: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(defaultOpenIndex);
   const baseId = useId();
 
@@ -28,8 +35,8 @@ export function Accordion({ items, defaultOpenIndex = null, className }: Accordi
         const buttonId = `${baseId}-trigger-${index}`;
         const panelId = `${baseId}-panel-${index}`;
 
-        return (
-          <div key={item.question}>
+        const content = (
+          <>
             <h3>
               <button
                 id={buttonId}
@@ -68,7 +75,12 @@ export function Accordion({ items, defaultOpenIndex = null, className }: Accordi
                 <p className="pr-10 pb-5 text-body-sm text-fg-muted">{item.answer}</p>
               </div>
             </div>
-          </div>
+          </>
+        );
+        return revealItems ? (
+          <ScrollReveal key={item.question}>{content}</ScrollReveal>
+        ) : (
+          <div key={item.question}>{content}</div>
         );
       })}
     </div>

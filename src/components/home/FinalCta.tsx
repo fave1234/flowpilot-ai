@@ -8,7 +8,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 
 export function FinalCta() {
   return (
-    <Section tone="ink" spacing="lg">
+    <Section reveal tone="ink" spacing="lg">
       <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
         <Eyebrow tone="inverse" rule={false} className="justify-center">
           Ready when you are
