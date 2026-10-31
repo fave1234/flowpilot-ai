@@ -9,6 +9,7 @@ import { Showcase } from '@/components/home/Showcase';
 import { PricingPreview } from '@/components/home/PricingPreview';
 import { FaqSection } from '@/components/home/FaqSection';
 import { FinalCta } from '@/components/home/FinalCta';
+import { HumanNarrative, AudiencePhotos, LifestyleWorkspace } from '@/components/home/HumanStories';
 
 /**
  * Home — composed from section components in src/components/home.
@@ -21,9 +22,12 @@ export function Home() {
     <>
       <Hero />
       <TrustBand />
+      <HumanNarrative />
       <ProblemSolution />
       <CoreFeatures />
       <HowItWorks />
+      <LifestyleWorkspace />
+      <AudiencePhotos />
       <Showcase />
       <PricingPreview />
       <FaqSection />
