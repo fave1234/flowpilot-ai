@@ -1,6 +1,7 @@
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { Section } from '@/components/layout/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 // Stable Unsplash image URLs; each photograph is presented as editorial imagery,
 // not as a photograph of a FlowPilot customer.
@@ -44,7 +45,7 @@ const audiences = [
 
 export function HumanNarrative() {
   return (
-    <Section tone="surface" spacing="lg" aria-labelledby="human-narrative-title">
+    <Section reveal tone="surface" spacing="lg" aria-labelledby="human-narrative-title">
       <div className="grid items-center gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
         <div className="max-w-lg">
           <Eyebrow>A little more human</Eyebrow>
@@ -96,7 +97,7 @@ export function HumanNarrative() {
 
 export function AudiencePhotos() {
   return (
-    <Section spacing="lg" className="bg-[#f7f6f3]" aria-labelledby="audience-title">
+    <Section reveal spacing="lg" className="bg-[#f7f6f3]" aria-labelledby="audience-title">
       <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
         <div className="max-w-2xl">
           <Eyebrow>Different days, shared momentum</Eyebrow>
@@ -109,8 +110,8 @@ export function AudiencePhotos() {
         </p>
       </div>
       <div className="mt-10 grid gap-8 md:grid-cols-3 md:gap-6">
-        {audiences.map((audience) => (
-          <article key={audience.title} className="group">
+        {audiences.map((audience, index) => (
+          <ScrollReveal as="article" key={audience.title} delay={index * 100} className="group">
             <div className="overflow-hidden rounded-2xl bg-mist-200 shadow-[0_16px_40px_-24px_rgba(31,26,57,0.38)]">
               <img
                 src={audience.image}
@@ -131,7 +132,7 @@ export function AudiencePhotos() {
                 className="ml-auto mt-1 size-4 shrink-0 text-mist-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
               />
             </div>
-          </article>
+          </ScrollReveal>
         ))}
       </div>
       <p className="mt-8 text-caption text-fg-subtle">
@@ -238,7 +239,7 @@ function ScreenComposite() {
 
 export function LifestyleWorkspace() {
   return (
-    <Section tone="surface" spacing="lg" aria-labelledby="lifestyle-title">
+    <Section reveal tone="surface" spacing="lg" aria-labelledby="lifestyle-title">
       <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
         <figure className="m-0">
           <div className="group relative aspect-[1568/1045] overflow-hidden rounded-2xl bg-mist-100 shadow-[0_24px_70px_-30px_rgba(31,26,57,0.35)]">

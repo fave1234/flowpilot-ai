@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import { Container } from './Container';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 type Tone = 'canvas' | 'surface' | 'muted' | 'ink' | 'brand';
 type Spacing = 'none' | 'sm' | 'md' | 'lg';
@@ -27,6 +28,7 @@ type SectionProps = {
   spacing?: Spacing;
   container?: 'content' | 'wide' | 'prose' | false;
   className?: string;
+  reveal?: boolean;
   'aria-labelledby'?: string;
 };
 
@@ -41,6 +43,7 @@ export function Section({
   spacing = 'md',
   container = 'content',
   className,
+  reveal = false,
   ...rest
 }: SectionProps) {
   return (
@@ -49,7 +52,15 @@ export function Section({
       className={cn('relative', tones[tone], spacings[spacing], className)}
       {...rest}
     >
-      {container ? <Container size={container}>{children}</Container> : children}
+      {container ? (
+        <Container size={container}>
+          {reveal ? <ScrollReveal>{children}</ScrollReveal> : children}
+        </Container>
+      ) : reveal ? (
+        <ScrollReveal>{children}</ScrollReveal>
+      ) : (
+        children
+      )}
     </section>
   );
 }

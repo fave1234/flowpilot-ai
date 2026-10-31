@@ -8,6 +8,7 @@ import { cn } from '@/lib/cn';
 import { Section } from '@/components/layout/Section';
 import { ButtonLink } from '@/components/ui/Button';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import {
   AutomationCrop,
   BoardCrop,
@@ -34,7 +35,7 @@ export function CoreFeatures() {
   const Crop = crops[active];
 
   return (
-    <Section tone="surface" spacing="md" id="features">
+    <Section reveal tone="surface" spacing="md" id="features">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <SectionHeading
           eyebrow="What it does"
@@ -60,37 +61,38 @@ export function CoreFeatures() {
             const Icon = icons[feature.icon];
             const isActive = active === feature.key;
             return (
-              <button
-                key={feature.key}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setActive(feature.key)}
-                onMouseEnter={() => setActive(feature.key)}
-                className={cn(
-                  'group flex w-full items-start gap-4 rounded-xl border p-5 text-left transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-violet-500/40 hover:shadow-e2 focus-visible:outline-offset-2',
-                  isActive ? 'border-brand-200 bg-brand-50/70 shadow-e1' : 'border-line bg-white',
-                )}
-              >
-                <span
+              <ScrollReveal key={feature.key} delay={index * 100}>
+                <button
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setActive(feature.key)}
+                  onMouseEnter={() => setActive(feature.key)}
                   className={cn(
-                    'grid size-10 shrink-0 place-items-center rounded-lg border',
-                    isActive
-                      ? 'border-brand-200 bg-white text-brand-600'
-                      : 'border-line bg-mist-50 text-fg-muted',
+                    'group flex w-full items-start gap-4 rounded-xl border p-5 text-left transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-violet-500/40 hover:shadow-e2 focus-visible:outline-offset-2',
+                    isActive ? 'border-brand-200 bg-brand-50/70 shadow-e1' : 'border-line bg-white',
                   )}
                 >
-                  <Icon aria-hidden="true" className="size-4" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="font-display text-body font-semibold text-fg">
-                      {feature.title}
-                    </span>
-                    <span className="text-xs text-fg-subtle">0{index + 1}</span>
+                  <span
+                    className={cn(
+                      'grid size-10 shrink-0 place-items-center rounded-lg border',
+                      isActive
+                        ? 'border-brand-200 bg-white text-brand-600'
+                        : 'border-line bg-mist-50 text-fg-muted',
+                    )}
+                  >
+                    <Icon aria-hidden="true" className="size-4" />
                   </span>
-                  <span className="mt-1.5 block text-body-sm text-fg-muted">{feature.body}</span>
-                </span>
-              </button>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="font-display text-body font-semibold text-fg">
+                        {feature.title}
+                      </span>
+                      <span className="text-xs text-fg-subtle">0{index + 1}</span>
+                    </span>
+                    <span className="mt-1.5 block text-body-sm text-fg-muted">{feature.body}</span>
+                  </span>
+                </button>
+              </ScrollReveal>
             );
           })}
         </div>

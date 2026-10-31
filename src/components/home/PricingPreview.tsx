@@ -9,11 +9,12 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TextLink } from '@/components/ui/TextLink';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 export function PricingPreview() {
   const [annual, setAnnual] = useState(false);
   return (
-    <Section tone="surface" spacing="md" id="pricing">
+    <Section reveal tone="surface" spacing="md" id="pricing">
       <div className="max-w-2xl">
         <Eyebrow>{pricing.eyebrow}</Eyebrow>
         <h2 className="mt-4 text-title-1">
@@ -59,50 +60,54 @@ export function PricingPreview() {
         </span>
       </div>
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
-        {pricing.tiers.map((tier) => (
-          <Card
-            key={tier.name}
-            variant={tier.highlighted ? 'brand-soft' : 'default'}
-            padding="lg"
-            className={cn('flex flex-col', tier.highlighted && 'border-brand-200 shadow-e2')}
-          >
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-body font-medium text-fg">{tier.name}</h3>
-              {tier.highlighted && (
-                <Badge variant="brand" size="sm">
-                  Recommended
-                </Badge>
+        {pricing.tiers.map((tier, index) => (
+          <ScrollReveal key={tier.name} delay={index * 100} className="flex">
+            <Card
+              variant={tier.highlighted ? 'brand-soft' : 'default'}
+              padding="lg"
+              className={cn(
+                'flex w-full flex-col',
+                tier.highlighted && 'border-brand-200 shadow-e2',
               )}
-            </div>
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-body font-medium text-fg">{tier.name}</h3>
+                {tier.highlighted && (
+                  <Badge variant="brand" size="sm">
+                    Recommended
+                  </Badge>
+                )}
+              </div>
 
-            <div className="mt-5 flex items-baseline gap-2">
-              <span className="font-display text-[2.75rem] leading-none font-bold tracking-[-0.035em] text-fg">
-                <span key={`${tier.name}-${annual}`} className="inline-block preview-enter">
-                  {annual && tier.name === 'Team'
-                    ? '$14'
-                    : annual && tier.name === 'Scale'
-                      ? '$31'
-                      : tier.price}
+              <div className="mt-5 flex items-baseline gap-2">
+                <span className="font-display text-[2.75rem] leading-none font-bold tracking-[-0.035em] text-fg">
+                  <span key={`${tier.name}-${annual}`} className="inline-block preview-enter">
+                    {annual && tier.name === 'Team'
+                      ? '$14'
+                      : annual && tier.name === 'Scale'
+                        ? '$31'
+                        : tier.price}
+                  </span>
                 </span>
-              </span>
-              <span className="text-caption text-fg-subtle">{tier.cadence}</span>
-            </div>
+                <span className="text-caption text-fg-subtle">{tier.cadence}</span>
+              </div>
 
-            <p className="mt-3 text-body-sm text-fg-muted">{tier.description}</p>
+              <p className="mt-3 text-body-sm text-fg-muted">{tier.description}</p>
 
-            <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-line pt-6">
-              {tier.features.map((feature) => (
-                <li key={feature} className="flex gap-2.5 text-body-sm text-fg-muted">
-                  <Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-600" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
+              <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-line pt-6">
+                {tier.features.map((feature) => (
+                  <li key={feature} className="flex gap-2.5 text-body-sm text-fg-muted">
+                    <Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-600" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
 
-            <ButtonLink to={paths.contact} variant={tier.variant} fullWidth className="mt-7">
-              {tier.cta}
-            </ButtonLink>
-          </Card>
+              <ButtonLink to={paths.contact} variant={tier.variant} fullWidth className="mt-7">
+                {tier.cta}
+              </ButtonLink>
+            </Card>
+          </ScrollReveal>
         ))}
       </div>
 

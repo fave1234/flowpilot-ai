@@ -5,6 +5,7 @@ import { DashboardWindow } from '@/components/product/DashboardWindow';
 import { Badge } from '@/components/ui/Badge';
 import { ButtonLink, buttonStyles } from '@/components/ui/Button';
 import { Container } from '@/components/layout/Container';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 /**
  * Dark hero. The dashboard frame is the primary visual asset of the page:
@@ -14,7 +15,7 @@ export function Hero() {
   return (
     <section className="relative bg-ink-900 text-fg-inverse">
       <Container className="pt-12 pb-12 sm:pt-16 sm:pb-14 lg:pt-20 lg:pb-16">
-        <div className="max-w-4xl">
+        <ScrollReveal className="max-w-4xl">
           <Badge variant="inverse" dot size="md">
             {hero.badge}
           </Badge>
@@ -38,11 +39,11 @@ export function Hero() {
           </div>
 
           <p className="mt-5 text-caption text-mist-500">{hero.reassurance}</p>
-        </div>
+        </ScrollReveal>
 
-        <div className="mt-12 lg:mt-16">
+        <ScrollReveal delay={100} className="mt-12 lg:mt-16">
           <DashboardWindow />
-        </div>
+        </ScrollReveal>
       </Container>
     </section>
   );
