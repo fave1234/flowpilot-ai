@@ -58,10 +58,15 @@ export function Accordion({ items, defaultOpenIndex = null, className }: Accordi
               id={panelId}
               role="region"
               aria-labelledby={buttonId}
-              hidden={!isOpen}
-              className="grid"
+              aria-hidden={!isOpen}
+              className={cn(
+                'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
+                isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+              )}
             >
-              <p className="pr-10 pb-5 text-body-sm text-fg-muted">{item.answer}</p>
+              <div className="min-h-0 overflow-hidden">
+                <p className="pr-10 pb-5 text-body-sm text-fg-muted">{item.answer}</p>
+              </div>
             </div>
           </div>
         );

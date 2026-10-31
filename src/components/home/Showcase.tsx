@@ -17,7 +17,9 @@ export function Showcase() {
       <div className="grid items-center gap-12 lg:grid-cols-[0.68fr_1.32fr] lg:gap-14">
         <div className="max-w-md">
           <Eyebrow tone="inverse">A deeper look</Eyebrow>
-          <h2 className="mt-4 text-title-1 text-white">See where the week actually went.</h2>
+          <h2 className="mt-4 text-title-1 text-white">
+            See where the week <span className="gradient-text-inverse">actually went.</span>
+          </h2>
           <p className="mt-4 text-lead text-mist-400">
             Insights bring focus time, project progress and automation activity into one quarterly
             view — so you can cut what is not working without guessing.

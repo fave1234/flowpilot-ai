@@ -22,8 +22,7 @@ export function Hero() {
           <h1 className="mt-6 text-display-1 text-white">
             {hero.headline[0]}
             <br />
-            {hero.headline[1].replace('.', '')}
-            <span className="text-brand-400">.</span>
+            <span className="gradient-text-inverse">{hero.headline[1]}</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lead text-mist-300">{hero.lead}</p>

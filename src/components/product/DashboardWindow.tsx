@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { AutomationCrop, CollaborationCrop, InsightsCrop } from '@/components/product/FeatureCrops';
 import {
   Bell,
   Calendar,
@@ -19,23 +21,116 @@ import {
   WindowDots,
 } from '@/components/product/Frame';
 
-/**
- * Hero product frame — the "command centre" view.
- * Static, non-interactive, captioned. Text never drops below 12px.
- */
+const views = ['Overview', 'Automations', 'Analytics', 'Team'] as const;
+type DashboardView = (typeof views)[number];
+
+/** An interactive view selector around intentionally illustrative product data. */
 export function DashboardWindow({ className }: { className?: string }) {
+  const [view, setView] = useState<DashboardView>('Overview');
+  const Preview =
+    view === 'Automations'
+      ? AutomationCrop
+      : view === 'Analytics'
+        ? InsightsCrop
+        : CollaborationCrop;
+  const details = {
+    Automations: {
+      title: 'Workflows that work for you',
+      subtitle: 'Your repeatable work, on autopilot',
+      stats: [
+        ['Active workflows', '6'],
+        ['Runs this month', '34'],
+        ['Time saved', '3h'],
+      ],
+    },
+    Analytics: {
+      title: 'A clearer picture of your work',
+      subtitle: 'A little perspective goes a long way',
+      stats: [
+        ['Focus time', '18.5h'],
+        ['Completed tasks', '42'],
+        ['Projects on track', '12'],
+      ],
+    },
+    Team: {
+      title: 'Better work, together',
+      subtitle: 'Everything your team needs in one place',
+      stats: [
+        ['Team members', '8'],
+        ['Active projects', '12'],
+        ['Updates this week', '24'],
+      ],
+    },
+  } as const;
+
   return (
-    <figure className={cn('m-0', className)}>
-      <FrameSurface tone="dark">
-        <TopBar />
-        <div className="flex">
-          <Sidebar />
-          <div className="min-w-0 flex-1 bg-mist-50/60">
-            <MainPanel />
-          </div>
+    <figure className={cn('relative m-0', className)}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-x-12 -top-24 bottom-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(120,101,245,0.28),transparent_65%)] blur-3xl"
+      />
+      <div className="relative rounded-[20px] border border-white/10 bg-white/[0.06] p-1.5 shadow-[0_30px_100px_-30px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:p-2">
+        <div
+          className="flex items-center gap-1 overflow-x-auto px-2 pb-2 pt-1 scroll-area"
+          role="group"
+          aria-label="Dashboard preview views"
+        >
+          {views.map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={view === item}
+              onClick={() => setView(item)}
+              className={cn(
+                'rounded-lg px-3 py-2 text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-white',
+                view === item
+                  ? 'bg-white/15 text-white'
+                  : 'text-mist-400 hover:bg-white/10 hover:text-white',
+              )}
+            >
+              {item}
+            </button>
+          ))}
+          <span className="ml-auto hidden shrink-0 pr-2 text-xs text-mist-400 sm:block">
+            Explore the workspace <span aria-hidden="true">↗</span>
+          </span>
         </div>
-      </FrameSurface>
-      <IllustrativeCaption tone="dark" className="mt-4" />
+        <FrameSurface tone="dark">
+          <TopBar />
+          <div className="flex">
+            <Sidebar />
+            <div className="min-w-0 flex-1 bg-mist-50/60">
+              <div key={view} className="preview-enter">
+                {view === 'Overview' ? (
+                  <MainPanel />
+                ) : (
+                  <div className="min-h-[400px] p-3.5 sm:p-5 lg:p-6">
+                    <h3 className="font-display text-[15px] font-bold text-ink-900">
+                      {details[view].title}
+                    </h3>
+                    <p className="mt-1 text-xs text-fg-subtle">{details[view].subtitle}</p>
+                    <div className="my-4 grid grid-cols-3 gap-2.5">
+                      {details[view].stats.map(([label, value]) => (
+                        <div
+                          key={label}
+                          className="rounded-lg border border-line bg-white p-3 shadow-e1"
+                        >
+                          <p className="text-xs text-fg-subtle">{label}</p>
+                          <p className="mt-2 font-display text-lg font-bold text-ink-900">
+                            {value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <Preview />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </FrameSurface>
+      </div>
+      <IllustrativeCaption tone="dark" className="relative mt-4" />
     </figure>
   );
 }

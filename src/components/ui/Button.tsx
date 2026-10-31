@@ -16,7 +16,7 @@ const base = cn(
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-600 text-white shadow-e1 hover:bg-brand-700 hover:shadow-e2 active:bg-brand-800',
+    'cta-shine bg-brand-600 text-white shadow-e1 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-e2 active:translate-y-0 active:bg-brand-800',
   secondary:
     'border border-line bg-surface text-fg shadow-e1 hover:border-line-strong hover:bg-mist-50',
   ghost: 'text-fg-muted hover:bg-mist-200/70 hover:text-fg',
