@@ -47,6 +47,7 @@ Start with [`docs/README.md`](./docs/README.md), then
 
 ## Content policy
 
-FlowPilot AI is fictional. No invented customers, testimonials, logos or business results appear
-anywhere. Every product interface is a captioned illustration — `aria-hidden`, non-interactive, with
-no text below 12px — and nothing implies live data or working AI. Pricing is labelled illustrative.
+FlowPilot AI is fictional. Editorial Unsplash photographs do not depict FlowPilot customers. The
+founder quote and its time-saving claim are explicitly labelled illustrative, not a real customer
+result. Product interface visuals are captioned illustrations with sample data; preview controls do
+not connect to live data or AI. Pricing is labelled illustrative.
