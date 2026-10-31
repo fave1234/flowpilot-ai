@@ -6,7 +6,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'dark' | 'invers
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const base = cn(
-  'group/btn inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-md',
+  'group/btn relative inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-md',
   'font-medium transition-[background-color,border-color,color,box-shadow,transform]',
   'duration-[var(--duration-base)] ease-[var(--ease-out-quint)]',
   'focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-brand-600',
@@ -15,12 +15,14 @@ const base = cn(
 );
 
 const variants: Record<ButtonVariant, string> = {
+  // Filled actions get a 2px lift and one pass of light. Both are pure CSS, so
+  // they cost nothing on touch and collapse under prefers-reduced-motion.
   primary:
-    'bg-brand-600 text-white shadow-e1 hover:bg-brand-700 hover:shadow-e2 active:bg-brand-800',
+    'btn-shine bg-brand-600 text-white shadow-e1 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-[0_12px_26px_-12px_rgb(87_67_218/0.7)] active:translate-y-0 active:shadow-e1',
   secondary:
-    'border border-line bg-surface text-fg shadow-e1 hover:border-line-strong hover:bg-mist-50',
+    'border border-line bg-surface text-fg shadow-e1 hover:-translate-y-0.5 hover:border-line-strong hover:bg-mist-50 hover:shadow-e2 active:translate-y-0',
   ghost: 'text-fg-muted hover:bg-mist-200/70 hover:text-fg',
-  dark: 'bg-ink-900 text-white shadow-e1 hover:bg-ink-800 hover:shadow-e2 active:bg-ink-950',
+  dark: 'btn-shine bg-ink-900 text-white shadow-e1 hover:-translate-y-0.5 hover:bg-ink-800 hover:shadow-e2 active:translate-y-0 active:bg-ink-950',
   inverse:
     'border border-white/20 bg-white/[0.06] text-white hover:border-white/35 hover:bg-white/[0.12] focus-visible:outline-halo-300',
 };

@@ -83,6 +83,127 @@
 }
 
 /* ===========================================================================
+   PREMIUM ACCENTS
+   Scoped additions used for emphasis and affordance, never as decoration for
+   its own sake. Gradient text is limited to display headings (≥ 30px) where
+   the AA large-text threshold applies.
+   =========================================================================== */
+
+/* Violet → indigo, for display headings on light surfaces. */
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-brand-800) 0%,
+    var(--color-brand-600) 52%,
+    var(--color-brand-500) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* White → violet → halo, for display headings on ink surfaces. */
+@utility text-gradient-inverse {
+  background-image: linear-gradient(
+    100deg,
+    #ffffff 0%,
+    var(--color-brand-200) 45%,
+    var(--color-brand-300) 74%,
+    var(--color-halo-300) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Forced-colours mode cannot paint a clipped gradient — restore solid text. */
+@media (forced-colors: active) {
+  .text-gradient-brand,
+  .text-gradient-inverse {
+    background-image: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
+
+/* One sweep of light across a filled button on hover / keyboard focus. */
+@utility btn-shine {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    background: linear-gradient(
+      105deg,
+      transparent 34%,
+      rgb(255 255 255 / 0.34) 50%,
+      transparent 66%
+    );
+    transform: translateX(-130%);
+    transition: transform var(--duration-slower) var(--ease-out-quint);
+    pointer-events: none;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: translateX(130%);
+  }
+}
+
+/* Horizontal rails that scroll on touch without a visible bar. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ===========================================================================
+   ENTRANCE MOTION
+   Short, eased, one direction. Collapsed by the reduced-motion block below.
+   =========================================================================== */
+
+@keyframes fp-view-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fp-price-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.32em);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@utility animate-view-in {
+  animation: fp-view-in var(--duration-slow) var(--ease-out-quint) both;
+}
+
+@utility animate-price-in {
+  animation: fp-price-in var(--duration-base) var(--ease-out-quint) both;
+}
+
+/* ===========================================================================
    MOTION PREFERENCES
    =========================================================================== */
 

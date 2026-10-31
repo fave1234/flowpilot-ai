@@ -1,17 +1,25 @@
+import { useState } from 'react';
 import {
+  BarChart3,
   Bell,
   Calendar,
   CheckSquare,
   ChevronDown,
-  Clock3,
-  FolderKanban,
   Inbox,
   Plus,
   Search,
   Sun,
+  Users,
   Zap,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { useTabKeyboardNav } from '@/lib/useTabKeyboardNav';
+import {
+  DashboardViewContent,
+  dashboardViews,
+  type DashboardViewKey,
+} from '@/components/product/DashboardViews';
 import {
   FrameSurface,
   IllustrativeCaption,
@@ -21,21 +29,111 @@ import {
 
 /**
  * Hero product frame — the "command centre" view.
- * Static, non-interactive, captioned. Text never drops below 12px.
+ *
+ * The tab strip is the one genuinely interactive part: four sample views share
+ * one skeleton so switching never shifts the layout. Everything else is still
+ * an illustration of a fictional product — sample data, captioned below.
  */
-export function DashboardWindow({ className }: { className?: string }) {
-  return (
-    <figure className={cn('m-0', className)}>
-      <FrameSurface tone="dark">
-        <TopBar />
-        <div className="flex">
-          <Sidebar />
-          <div className="min-w-0 flex-1 bg-mist-50/60">
-            <MainPanel />
+export function DashboardWindow({
+  className,
+  glass = false,
+}: {
+  className?: string;
+  /** Frosted bezel for the hero, where the frame sits over the ambient field. */
+  glass?: boolean;
+}) {
+  const [view, setView] = useState<DashboardViewKey>('overview');
+  const activeIndex = dashboardViews.findIndex((tab) => tab.key === view);
+  const { setTabRef, onKeyDown } = useTabKeyboardNav(dashboardViews.length, activeIndex, (index) =>
+    setView(dashboardViews[index].key),
+  );
+
+  const frame = (
+    <FrameSurface tone="dark" interactive glass={glass}>
+      <TopBar viewLabel={dashboardViews[activeIndex]?.label ?? 'Overview'} />
+
+      <div className="flex items-center gap-2 border-b border-line bg-mist-50/80 px-2.5 py-2 backdrop-blur-xl sm:px-4">
+        <div
+          role="tablist"
+          aria-label="Dashboard views"
+          className="scrollbar-none flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-lg border border-line bg-white/70 p-0.5 shadow-e1"
+        >
+          {dashboardViews.map((tab, index) => {
+            const isActive = tab.key === view;
+
+            return (
+              <button
+                key={tab.key}
+                ref={setTabRef(index)}
+                type="button"
+                role="tab"
+                id={`dashboard-tab-${tab.key}`}
+                aria-selected={isActive}
+                aria-controls="dashboard-panel"
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setView(tab.key)}
+                onKeyDown={onKeyDown}
+                className={cn(
+                  'inline-flex h-7 shrink-0 cursor-pointer items-center gap-1.5 rounded-[7px] px-2 text-xs font-medium transition-[background-color,color,box-shadow] duration-[var(--duration-fast)] focus-visible:outline-offset-1',
+                  isActive
+                    ? 'bg-white text-ink-900 shadow-e1'
+                    : 'text-fg-subtle hover:bg-white/70 hover:text-ink-700',
+                )}
+              >
+                <tab.icon
+                  aria-hidden="true"
+                  className={cn(
+                    'hidden size-3.5 sm:block',
+                    isActive ? 'text-brand-600' : 'text-fg-subtle',
+                  )}
+                />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <span className="ml-auto hidden shrink-0 items-center gap-1.5 text-xs text-fg-subtle md:flex">
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-brand-500" />
+          Sample workspace
+        </span>
+      </div>
+
+      <div className="flex">
+        <Sidebar activeView={view} />
+        <div className="min-w-0 flex-1 bg-mist-50/95 backdrop-blur-xl">
+          <div
+            key={view}
+            id="dashboard-panel"
+            role="tabpanel"
+            aria-labelledby={`dashboard-tab-${view}`}
+            tabIndex={0}
+            className="animate-view-in focus-visible:outline-offset-[-2px]"
+          >
+            <DashboardViewContent view={view} />
           </div>
         </div>
-      </FrameSurface>
-      <IllustrativeCaption tone="dark" className="mt-4" />
+      </div>
+    </FrameSurface>
+  );
+
+  return (
+    <figure className={cn('m-0', className)}>
+      {glass ? (
+        <div className="relative rounded-[2rem] border border-white/10 bg-white/[0.035] p-2 shadow-[0_50px_120px_-50px_rgb(0_0_0/0.9)] backdrop-blur-xl">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-10 -top-px h-px bg-gradient-to-r from-transparent via-brand-400/70 to-transparent"
+          />
+          {frame}
+        </div>
+      ) : (
+        frame
+      )}
+
+      <IllustrativeCaption tone="dark" className="mt-4">
+        The tabs switch between four sample views.
+      </IllustrativeCaption>
     </figure>
   );
 }
@@ -61,14 +159,18 @@ function MiniMark() {
   );
 }
 
-function TopBar() {
+function TopBar({ viewLabel }: { viewLabel: string }) {
   return (
-    <div className="flex h-12 items-center gap-2.5 border-b border-line bg-white px-3 sm:px-4">
+    <div
+      aria-hidden="true"
+      className="flex h-12 items-center gap-2.5 border-b border-line bg-white/95 px-3 backdrop-blur-xl sm:px-4"
+    >
       <WindowDots />
       <span className="hidden h-4 w-px bg-line sm:block" />
       <div className="flex items-center gap-2">
         <MiniMark />
         <span className="text-xs font-semibold text-ink-900">FlowPilot</span>
+        <span className="hidden text-xs text-fg-subtle sm:inline">/ {viewLabel}</span>
       </div>
 
       <span className="hidden items-center gap-1.5 rounded-md border border-line px-2 py-1 text-xs text-ink-600 sm:flex">
@@ -100,11 +202,20 @@ function TopBar() {
 /* Sidebar                                                                     */
 /* -------------------------------------------------------------------------- */
 
-const workspaceNav = [
-  { label: 'Home', icon: Sun, active: true },
+type NavItem = {
+  label: string;
+  icon: LucideIcon;
+  badge?: string;
+  view?: DashboardViewKey;
+};
+
+const workspaceNav: NavItem[] = [
+  { label: 'Home', icon: Sun, view: 'overview' },
   { label: 'My tasks', icon: CheckSquare, badge: '8' },
   { label: 'Inbox', icon: Inbox, badge: '3' },
   { label: 'Calendar', icon: Calendar },
+  { label: 'Insights', icon: BarChart3, view: 'analytics' },
+  { label: 'Team', icon: Users, view: 'team' },
 ];
 
 const projectNav = [
@@ -121,28 +232,36 @@ function NavLabel({ children }: { children: string }) {
   );
 }
 
-function Sidebar() {
+function Sidebar({ activeView }: { activeView: DashboardViewKey }) {
   return (
-    <div className="hidden w-[216px] shrink-0 flex-col border-r border-line bg-white p-2.5 lg:flex">
+    <div
+      aria-hidden="true"
+      className="hidden w-[216px] shrink-0 flex-col border-r border-line bg-white/90 p-2.5 backdrop-blur-xl lg:flex"
+    >
       <nav className="flex flex-col">
         <NavLabel>Workspace</NavLabel>
-        {workspaceNav.map(({ label, icon: Icon, active, badge }) => (
-          <div
-            key={label}
-            className={cn(
-              'flex items-center gap-2 rounded-md px-2 py-[7px] text-xs',
-              active ? 'bg-mist-100 font-medium text-ink-900' : 'text-ink-500',
-            )}
-          >
-            <Icon className={cn('size-3.5', active ? 'text-brand-600' : 'text-fg-subtle')} />
-            <span className="truncate">{label}</span>
-            {badge && (
-              <span className="ml-auto rounded bg-mist-200 px-1 text-xs font-semibold text-ink-600">
-                {badge}
-              </span>
-            )}
-          </div>
-        ))}
+        {workspaceNav.map(({ label, icon: Icon, badge, view }) => {
+          const active = view === activeView;
+
+          return (
+            <div
+              key={label}
+              className={cn(
+                'flex items-center gap-2 rounded-md px-2 py-[7px] text-xs transition-colors duration-[var(--duration-base)]',
+                active ? 'bg-mist-100 font-medium text-ink-900' : 'text-ink-500',
+              )}
+            >
+              <Icon className={cn('size-3.5', active ? 'text-brand-600' : 'text-fg-subtle')} />
+              <span className="truncate">{label}</span>
+              {badge && (
+                <span className="ml-auto rounded bg-mist-200 px-1 text-xs font-semibold text-ink-600">
+                  {badge}
+                </span>
+              )}
+              {active && <span className="ml-auto size-1.5 rounded-full bg-brand-500" />}
+            </div>
+          );
+        })}
 
         <NavLabel>Projects</NavLabel>
         {projectNav.map((project) => (
@@ -156,8 +275,18 @@ function Sidebar() {
         ))}
 
         <NavLabel>Automate</NavLabel>
-        <div className="flex items-center gap-2 rounded-md px-2 py-[7px] text-xs text-ink-500">
-          <Zap className="size-3.5 text-fg-subtle" />
+        <div
+          className={cn(
+            'flex items-center gap-2 rounded-md px-2 py-[7px] text-xs transition-colors duration-[var(--duration-base)]',
+            activeView === 'automations' ? 'bg-mist-100 font-medium text-ink-900' : 'text-ink-500',
+          )}
+        >
+          <Zap
+            className={cn(
+              'size-3.5',
+              activeView === 'automations' ? 'text-brand-600' : 'text-fg-subtle',
+            )}
+          />
           Automations
           <span className="ml-auto text-xs text-fg-subtle">6</span>
         </div>
@@ -178,206 +307,6 @@ function Sidebar() {
             <p className="truncate text-xs text-fg-subtle">Studio North</p>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Main panel                                                                  */
-/* -------------------------------------------------------------------------- */
-
-const kpis = [
-  { label: 'Active projects', value: '12', meta: '3 due this week', icon: FolderKanban },
-  { label: 'Tasks due today', value: '8', meta: '2 high priority', icon: CheckSquare },
-  { label: 'Automation runs', value: '34', meta: 'saved 3h this week', icon: Zap },
-  { label: 'Focus time', value: '18.5h', meta: 'avg. 3h 42m / day', icon: Clock3 },
-];
-
-// Percentage heights for the stacked focus / meeting bars.
-const chart = [
-  { day: 'Mon', focus: 54, meetings: 18 },
-  { day: 'Tue', focus: 66, meetings: 24 },
-  { day: 'Wed', focus: 72, meetings: 16 },
-  { day: 'Thu', focus: 58, meetings: 26, highlight: true, value: '5h 10m' },
-  { day: 'Fri', focus: 62, meetings: 14 },
-  { day: 'Sat', focus: 22, meetings: 6 },
-  { day: 'Sun', focus: 12, meetings: 0 },
-];
-
-const priorities = [
-  { title: 'Finalise pricing brief v2', project: 'Website refresh', time: '10:30', high: true },
-  { title: 'Review homepage copy', project: 'Website refresh', time: '13:00' },
-  { title: 'Send Q4 scope to client', project: 'Client work', time: '16:00' },
-];
-
-function MainPanel() {
-  return (
-    <div className="p-3.5 sm:p-5 lg:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="font-display text-[15px] leading-tight font-bold text-ink-900">
-            Good morning, Alex
-          </h3>
-          <p className="mt-1 text-xs text-fg-subtle">Tuesday, 14 October · 3 priorities today</p>
-        </div>
-        <span className="hidden h-7 items-center gap-1.5 rounded-md border border-line bg-white px-2.5 text-xs text-ink-600 sm:flex">
-          This week
-          <ChevronDown className="size-3 text-fg-subtle" />
-        </span>
-      </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-2.5 md:grid-cols-4">
-        {kpis.map(({ label, value, meta, icon: Icon }) => (
-          <div key={label} className="rounded-lg border border-line bg-white p-2.5 shadow-e1">
-            <div className="flex items-center gap-1.5">
-              <Icon className="size-3 text-fg-subtle" />
-              <span className="truncate text-xs text-fg-subtle">{label}</span>
-            </div>
-            <p className="mt-1.5 font-display text-lg leading-none font-bold text-ink-900">
-              {value}
-            </p>
-            <p className="mt-1.5 truncate text-xs text-fg-subtle">{meta}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-3 grid gap-3 md:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
-        <ChartCard />
-        <PrioritiesCard />
-      </div>
-
-      <ActivityStrip />
-    </div>
-  );
-}
-
-function ChartCard() {
-  return (
-    <div className="rounded-lg border border-line bg-white p-3 shadow-e1">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold text-ink-900">Focus time</p>
-          <p className="mt-0.5 text-xs text-fg-subtle">Last 7 days · 18h 30m</p>
-          <p className="mt-1 text-xs font-medium text-ink-700">Thu · 5h 10m focus</p>
-        </div>
-        <div className="hidden items-center gap-3 sm:flex">
-          <span className="flex items-center gap-1.5 text-xs text-fg-subtle">
-            <span className="size-1.5 rounded-full bg-brand-500" />
-            Focus
-          </span>
-          <span className="flex items-center gap-1.5 text-xs text-fg-subtle">
-            <span className="size-1.5 rounded-full bg-halo-400" />
-            Meetings
-          </span>
-        </div>
-      </div>
-
-      <div className="relative mt-4">
-        <div className="pointer-events-none absolute inset-x-0 top-0 flex h-[104px] flex-col justify-between">
-          {[0, 1, 2, 3].map((line) => (
-            <span key={line} className="block h-px w-full bg-mist-200" />
-          ))}
-        </div>
-
-        <div className="relative flex h-[104px] items-end gap-1.5 sm:gap-2">
-          {chart.map((bar) => (
-            <div key={bar.day} className="flex h-full flex-1 flex-col justify-end gap-0.5">
-              <div
-                className={cn(
-                  'w-full rounded-t-[3px]',
-                  bar.highlight ? 'bg-brand-500' : 'bg-brand-300',
-                )}
-                style={{ height: `${bar.focus}%` }}
-              />
-              {bar.meetings > 0 && (
-                <div
-                  className="w-full rounded-t-[2px] bg-halo-300"
-                  style={{ height: `${bar.meetings}%` }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-2 flex gap-1.5 sm:gap-2">
-          {chart.map((bar) => (
-            <span
-              key={bar.day}
-              className={cn(
-                'flex-1 text-center text-xs',
-                bar.highlight ? 'font-semibold text-ink-800' : 'text-fg-subtle',
-              )}
-            >
-              {bar.day.slice(0, 1)}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PrioritiesCard() {
-  return (
-    <div className="rounded-lg border border-line bg-white p-3 shadow-e1">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold text-ink-900">Today’s priorities</p>
-        <span className="text-xs text-fg-subtle">3 of 5</span>
-      </div>
-
-      <ul className="mt-2 divide-y divide-line/80">
-        {priorities.map((task) => (
-          <li key={task.title} className="flex items-start gap-2 py-2">
-            <span className="mt-0.5 size-3.5 shrink-0 rounded-[4px] border border-mist-400 bg-white" />
-            <div className="min-w-0">
-              <p className="flex items-center gap-1.5 truncate text-xs font-medium text-ink-800">
-                {task.title}
-                {task.high && <span className="size-1.5 shrink-0 rounded-full bg-brand-500" />}
-              </p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-xs text-fg-subtle">
-                <span className="truncate">{task.project}</span>
-                <span aria-hidden="true">·</span>
-                <span>{task.time}</span>
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-1 flex items-center justify-between border-t border-line pt-2.5">
-        <span className="text-xs font-medium text-brand-700">Open my tasks</span>
-        <span className="text-xs text-fg-subtle">→</span>
-      </div>
-    </div>
-  );
-}
-
-const activity = [
-  { icon: Zap, title: 'Meeting notes → tasks', meta: '3 tasks created · 12m ago' },
-  { icon: Calendar, title: 'Weekly plan → calendar', meta: 'Scheduled · Mon 08:00' },
-  { icon: Inbox, title: 'Inbox triage', meta: '6 threads sorted · 1h ago' },
-];
-
-function ActivityStrip() {
-  return (
-    <div className="mt-3 hidden rounded-lg border border-line bg-white px-3 py-2.5 shadow-e1 md:block">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold text-ink-900">Automation activity</p>
-        <span className="text-xs text-fg-subtle">Today</span>
-      </div>
-      <div className="mt-2 grid gap-2 sm:grid-cols-3">
-        {activity.map(({ icon: Icon, title, meta }) => (
-          <div key={title} className="flex items-start gap-2">
-            <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded border border-line bg-mist-50">
-              <Icon className="size-2.5 text-brand-600" />
-            </span>
-            <div className="min-w-0">
-              <p className="truncate text-xs font-medium text-ink-800">{title}</p>
-              <p className="truncate text-xs text-fg-subtle">{meta}</p>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

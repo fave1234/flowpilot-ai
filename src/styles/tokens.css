@@ -178,4 +178,14 @@
   --duration-fast: 140ms;
   --duration-base: 220ms;
   --duration-slow: 420ms;
+  --duration-slower: 620ms;
+
+  /* -------------------------------------------------------------------------
+     8. AMBIENT
+     Depth for the dark hero only: one violet field and one halo field behind
+     the dashboard frame. Never used behind text or on light bands.
+     ------------------------------------------------------------------------- */
+  --glow-brand: rgb(120 101 245 / 0.34);
+  --glow-brand-soft: rgb(120 101 245 / 0.12);
+  --glow-halo: rgb(165 180 252 / 0.16);
 }

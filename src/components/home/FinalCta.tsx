@@ -19,7 +19,10 @@ export function FinalCta() {
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <ButtonLink to={primaryCta.to} size="lg">
             {finalCta.primary}
-            <ArrowRight aria-hidden="true" />
+            <ArrowRight
+              aria-hidden="true"
+              className="transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-quint)] group-hover/btn:translate-x-0.5"
+            />
           </ButtonLink>
           <ButtonLink to={paths.pricing} variant="inverse" size="lg">
             {finalCta.secondary}

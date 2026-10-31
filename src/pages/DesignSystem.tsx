@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { ArrowRight, Check, CircleDashed, Info, Minus } from 'lucide-react';
 import { usePageMeta } from '@/lib/usePageMeta';
@@ -10,6 +11,7 @@ import { Checkbox } from '@/components/ui/Checkbox';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Field } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
+import { SegmentedControl, type SegmentedOption } from '@/components/ui/SegmentedControl';
 import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
 import { paths } from '@/config/paths';
@@ -200,9 +202,11 @@ const inventory = {
     'Footer, 404, SEO helper',
     'Hero dashboard frame + analytics frame',
     'Four feature crops (automation, board, collaboration, insights)',
+    'Interactive dashboard tabs (four sample hero views)',
+    'Segmented control (pricing cadence)',
+    'Gradient headline emphasis + button shine',
   ],
   planned: [
-    'Segmented toggle (pricing cadence)',
     'Comparison table (responsive)',
     'Testimonial-free proof band',
     'Section reveal on scroll',
@@ -210,6 +214,40 @@ const inventory = {
     'Breadcrumbs',
   ],
 };
+
+/* -------------------------------------------------------------------------- */
+/* Segmented control demo                                                      */
+/* -------------------------------------------------------------------------- */
+
+type DemoPeriod = 'monthly' | 'annual';
+
+const billingDemoOptions: SegmentedOption<DemoPeriod>[] = [
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'annual', label: 'Annual', badge: 'Save 20%' },
+];
+
+function SegmentedDemo() {
+  const [period, setPeriod] = useState<DemoPeriod>('monthly');
+
+  return (
+    <div className="mt-6 border-t border-line pt-6">
+      <div className="flex flex-wrap items-center gap-4">
+        <SegmentedControl
+          label="Billing period (demo)"
+          options={billingDemoOptions}
+          value={period}
+          onChange={setPeriod}
+        />
+        <p className="text-body-sm text-fg-muted">
+          {period === 'monthly' ? '$18 per seat / month' : '$14 per seat / month, billed annually'}
+        </p>
+      </div>
+      <p className="mt-2 text-caption text-fg-subtle">
+        Transform-only indicator, `aria-pressed` options, optional violet badge.
+      </p>
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /* Page                                                                        */
@@ -362,6 +400,27 @@ export function DesignSystem() {
                     </div>
                   ))}
                 </div>
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-lg border border-line bg-surface p-5">
+                    <p className="text-caption text-fg-subtle">Keyword gradient · light</p>
+                    <p className="mt-2 text-title-2">
+                      One workspace.{' '}
+                      <span className="text-gradient-brand">Four things it does well.</span>
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-white/10 bg-ink-900 p-5">
+                    <p className="text-caption text-mist-400">Keyword gradient · ink</p>
+                    <p className="mt-2 text-title-2 text-white">
+                      See where the week{' '}
+                      <span className="text-gradient-inverse">actually went.</span>
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-3 text-caption text-fg-subtle">
+                  Gradient clipping is reserved for display sizes (30px+) so the AA large-text
+                  threshold still applies. Small text is always a solid token.
+                </p>
               </Block>
 
               {/* --------------------------------------------------------- Space */}
@@ -512,6 +571,8 @@ export function DesignSystem() {
                     `buttonStyles()` exports the same treatment for anchors and router links.
                   </span>
                 </div>
+
+                <SegmentedDemo />
               </Block>
 
               {/* -------------------------------------------------------- Badges */}
@@ -640,10 +701,10 @@ export function DesignSystem() {
                 id="product-ui"
                 eyebrow="09 · Product language"
                 title="Mockups built from the same tokens"
-                description="Interface frames are DOM, not screenshots: they stay sharp at any size, respect the type system and can be cropped per section. Three variants ship — the dashboard (homepage hero), the insights view (showcase) and four single-region crops (features). They are decorative: no working controls, never below 12px, always captioned."
+                description="Interface frames are DOM, not screenshots: they stay sharp at any size, respect the type system and can be cropped per section. Three variants ship — the dashboard (homepage hero), the insights view (showcase) and four single-region crops (features). Text never drops below 12px and every frame is captioned as illustrative. The hero dashboard is the one exception to the static rule: its view tabs are real buttons, keyboard operable, and switch between four sample screens."
               >
-                <div className="rounded-xl border border-line bg-mist-200/60 p-4 sm:p-6">
-                  <DashboardWindow />
+                <div className="rounded-xl border border-white/10 bg-ink-900 p-4 sm:p-6">
+                  <DashboardWindow glass />
                 </div>
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -659,6 +720,10 @@ export function DesignSystem() {
                     {
                       title: 'Always captioned',
                       note: 'Every frame carries an “illustrative” label. Nothing implies live data or real AI.',
+                    },
+                    {
+                      title: 'Interactive only when honest',
+                      note: 'The hero tab strip is operable because it only changes sample views. No frame simulates saving, sending or AI output.',
                     },
                   ].map((rule) => (
                     <div key={rule.title} className="border-t border-line pt-3">
@@ -679,8 +744,9 @@ export function DesignSystem() {
                 <div className="divide-y divide-line border-y border-line">
                   {[
                     ['fast', '140ms', 'Hover, focus, colour changes'],
-                    ['base', '220ms', 'Buttons, card lift, menu panel'],
-                    ['slow', '420ms', 'Page-level reveals (planned)'],
+                    ['base', '220ms', 'Buttons, card lift, price swap'],
+                    ['slow', '420ms', 'Accordion, view and panel switch'],
+                    ['slower', '620ms', 'One pass of light across a filled button'],
                   ].map(([name, duration, use]) => (
                     <div
                       key={name}
@@ -694,7 +760,10 @@ export function DesignSystem() {
                 </div>
                 <p className="mt-3 text-caption text-fg-subtle">
                   Easing: <code className="font-mono">cubic-bezier(0.22, 1, 0.36, 1)</code> —
-                  exponential ease-out, no overshoot.
+                  exponential ease-out, no overshoot. Accordion panels interpolate
+                  <code className="ml-1 font-mono">grid-template-rows</code> from
+                  <code className="ml-1 font-mono">0fr</code> to
+                  <code className="ml-1 font-mono">1fr</code>, so height and opacity move together.
                 </p>
               </Block>
 

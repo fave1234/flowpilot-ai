@@ -6,9 +6,12 @@ import { cn } from '@/lib/cn';
 export function IllustrativeCaption({
   tone = 'light',
   className,
+  children,
 }: {
   tone?: 'light' | 'dark';
   className?: string;
+  /** Optional clause appended to the standard disclosure. */
+  children?: ReactNode;
 }) {
   return (
     <figcaption
@@ -21,7 +24,7 @@ export function IllustrativeCaption({
       <Info aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" />
       <span>
         Illustrative interface. FlowPilot AI is a fictional product — no live data, integrations or
-        AI is connected.
+        AI is connected.{children ? ` ${children}` : null}
       </span>
     </figcaption>
   );
@@ -95,19 +98,29 @@ export function FrameSurface({
   children,
   className,
   tone = 'light',
+  interactive = false,
+  glass = false,
 }: {
   children: ReactNode;
   className?: string;
   tone?: 'light' | 'dark';
+  /** The hero dashboard owns a tablist, so it must stay operable by keyboard. */
+  interactive?: boolean;
+  /** Frosted chrome — only meaningful on the dark frame over the ambient glow. */
+  glass?: boolean;
 }) {
   return (
     <div
-      aria-hidden="true"
+      aria-hidden={interactive ? undefined : true}
       className={cn(
-        'pointer-events-none overflow-hidden rounded-2xl border bg-surface select-none',
+        'overflow-hidden rounded-2xl border select-none',
+        !interactive && 'pointer-events-none',
         tone === 'dark'
-          ? 'border-white/10 shadow-[0_1px_0_rgb(255_255_255/0.08)_inset,0_40px_90px_-40px_rgb(0_0_0/0.6)]'
-          : 'border-line shadow-frame',
+          ? cn(
+              'border-white/10 shadow-[0_1px_0_rgb(255_255_255/0.08)_inset,0_40px_90px_-40px_rgb(0_0_0/0.6)]',
+              glass ? 'bg-white/[0.045] backdrop-blur-2xl' : 'bg-surface',
+            )
+          : 'border-line bg-surface shadow-frame',
         className,
       )}
     >

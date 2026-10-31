@@ -9,7 +9,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
-    "smoke": "npm run build && node scripts/smoke-routes.mjs",
+    "smoke": "npm run build && node scripts/smoke-routes.mjs && node scripts/interaction-smoke.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"docs/**/*.md\" \"*.md\" \"*.json\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/**/*.md\""
   },

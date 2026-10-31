@@ -25,6 +25,20 @@
 - **Frame text floor:** 12 px. Detail is removed rather than shrunk; sidebars and secondary panels
   drop out at tablet instead of compressing the primary view.
 
+## Resolved — v0.2 visual polish pass (31 Oct 2026)
+
+| #   | Decision              | Resolution                                                                                                                                                                                                      |
+| --- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8   | Hero dashboard        | **Approved:** four interactive views (Overview, Automations, Analytics, Team) on a real tablist. Static illustration was the original rule; the tab strip is now the single exception and is keyboard operable. |
+| 9   | Ambient depth         | **Approved:** one violet radial field behind the hero frame, a frosted glass bezel and translucent chrome (`border-white/10`, `backdrop-blur`). This replaces the old "no glows" rule for that band only.       |
+| 10  | Headline emphasis     | **Approved:** violet → indigo gradient on one keyword phrase in four section headlines (features, showcase, pricing, FAQ). Display sizes only; solid ink everywhere else.                                       |
+| 11  | Feature section       | **Approved:** hover/click/focus tab cards drive one large preview instead of four static crops. Cards keep body copy, index and an elevation hover.                                                             |
+| 12  | FAQ motion            | **Approved:** measured height via `grid-template-rows` + opacity, `inert` while closed. Plus → × rotation kept, slowed to 420 ms and given a violet fill.                                                       |
+| 13  | CTA micro-interaction | **Approved:** 2 px hover lift plus a single 620 ms light sweep on filled buttons (`primary`, `dark`). No loops, no idle animation.                                                                              |
+
+Still open (unchanged): currency switcher, contact delivery, analytics, full Features/Pricing page
+content, route-level code splitting.
+
 ## Still open (non-blocking)
 
 These can be answered during the remaining page builds. Each item states the current default in code.
@@ -36,10 +50,11 @@ These can be answered during the remaining page builds. Each item states the cur
 
 ### Pricing presentation
 
-- **Current:** USD only, "per seat / month", three tiers (Starter $0, Team $18, Scale $39), labelled
-  illustrative on the homepage preview.
-- **Open:** a currency switcher (USD/GBP/CAD), annual framing ("two months free" vs "save 17%"), and
-  whether the full pricing page keeps the same tier names.
+- **Resolved for the homepage preview:** USD only, three tiers (Starter $0, Team $18/14, Scale $39/31)
+  with a Monthly / Annual segmented toggle. Annual is framed as **Save 20%** and shows the monthly
+  equivalent ($14, $31) with "billed annually · 20% off" under each price. Still labelled illustrative.
+- **Open:** a currency switcher (USD/GBP/CAD) and whether the full pricing page keeps the same tier
+  names and cadence copy.
 
 ### About page framing
 

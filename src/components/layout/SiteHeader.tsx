@@ -97,7 +97,7 @@ export function SiteHeader() {
           aria-controls="mobile-nav"
           onClick={() => setMenuOpen((open) => !open)}
           className={cn(
-            'grid size-10 place-items-center rounded-md border shadow-e1 transition-colors lg:hidden',
+            'grid size-10 cursor-pointer place-items-center rounded-md border shadow-e1 transition-colors lg:hidden',
             overDark
               ? 'border-white/15 bg-white/5 text-white hover:bg-white/10'
               : 'border-line bg-surface text-fg hover:bg-mist-50',

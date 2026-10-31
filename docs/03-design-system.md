@@ -81,7 +81,11 @@ Four families, each with one job. Semantic aliases are preferred in components.
 ### Colour rules
 
 - Maximum one violet surface and one violet button visible per band.
-- No gradients on UI. No glows, no blurred orbs.
+- Gradients live in exactly two places: keyword emphasis on display headings
+  (`text-gradient-brand` / `text-gradient-inverse`, 30 px and up) and the ambient field behind the
+  hero dashboard. No gradient buttons, cards, borders or body copy.
+- No blurred orbs behind text. One ambient field is allowed — violet, low alpha, behind the hero
+  product frame on ink — plus a frosted glass bezel and chrome for that frame. Nowhere else.
 - A dark band must be separated by at least one light band; never two dark bands in a row.
 - Tinted surfaces (`brand-50`, `halo-100`) only for a highlighted tier or a suggestion, never as a
   general background.
@@ -117,6 +121,8 @@ consistent without per-breakpoint overrides.
 - No all-caps headlines. Uppercase is reserved for `overline`.
 - No more than two weights of an accent colour in a single band.
 - Headings use `text-wrap: balance`; paragraphs use `text-wrap: pretty` (set globally).
+- Gradient text is a display-only emphasis: one keyword phrase per heading, `brand-800 → brand-500`
+  on light and `white → brand-300 → halo-300` on ink. Body copy, labels and captions stay solid.
 
 ---
 
@@ -185,6 +191,10 @@ Sizes: `sm` 36 px · `md` 44 px · `lg` 48 px. Radius 10 px. Focus: 2 px `brand-
 offset (`halo-300` on ink). Icons are 16 px and inherit `currentColor`; arrow icons translate 2 px on
 hover. Disabled: 50% opacity, pointer events off.
 
+Filled variants (`primary`, `dark`) lift 2 px on hover and carry one 620 ms pass of light
+(`btn-shine`, a clipped `::after` gradient). `secondary` lifts 2 px with `shadow-e2`. All three collapse
+under `prefers-reduced-motion`. The sweep only runs on hover or `:focus-visible`, never on mount.
+
 Rules: sentence case labels, 2–4 words, verbs first ("Start for free", "Explore the design system").
 Never two `primary` buttons in the same visual band.
 
@@ -193,7 +203,8 @@ Never two `primary` buttons in the same visual band.
 Variants: `default` (white + line + e1), `muted` (surface-muted), `ink` (dark), `brand-soft`
 (violet tint), `plain`. Padding: `sm` 16, `md` 24, `lg` 28–32. Radius 14 px.
 Only cards that are entirely a link get `interactive` (0.5 px lift + `shadow-e2` + stronger border).
-Never nest a card inside a card.
+Never nest a card inside a card. Tier cards and feature tab cards add their own restrained hover:
+`-translate-y-0.5`, `border-brand-500/40`, `shadow-e2`.
 
 ### Badges (`Badge`)
 
@@ -210,8 +221,17 @@ never on every keystroke.
 
 ### Accordion
 
-Single-open disclosure; button + `aria-expanded`/`aria-controls`; plus icon rotates 45° to a close
-state; closed panels are removed from the accessibility tree (`hidden`). Used for FAQs only.
+Single-open disclosure; button + `aria-expanded`/`aria-controls`. The plus indicator rotates 45° into
+a close state while the border and fill move to `brand-50` / `brand-200`. Panels stay mounted and
+interpolate `grid-template-rows` `0fr → 1fr` with opacity in the same 420 ms transition; a closed panel
+is `inert`, so it leaves both the accessibility tree and the tab order without killing the animation.
+Used for FAQs only.
+
+### Segmented control
+
+Two or more options on one sliding white pill: `role="group"` with `aria-pressed` buttons, an
+optional violet badge per option, transform-only indicator (no layout animation). Used for the pricing
+cadence toggle. Options are ≥ 36 px tall and keep a 44 px hit area on touch through container padding.
 
 ### Navigation
 
@@ -241,8 +261,12 @@ The interface frames (`components/product/`) are the signature visual asset.
 - Content is realistic but generic: "Studio North", "Finalise pricing brief v2", dates, durations.
 - Text never goes below 12 px. Below that, replace detail with an abstract row rather than shrinking
   the type.
-- **Never interactive:** `aria-hidden`, `pointer-events-none`, no focusable controls. Anything that
-  would be a button is a styled span.
+- **Static by default:** decorative crops are `aria-hidden`, `pointer-events-none`, with no focusable
+  controls. Anything that would be a button is a styled span.
+- **One interactive exception:** the hero dashboard's view tabs are real buttons — `role="tablist"`,
+  roving `tabindex`, arrow/Home/End keys, `aria-selected` and one `aria-labelledby` panel. They only
+  switch between four sample screens; nothing pretends to save, send or run AI. The frame stays
+  captioned, and all four views share one skeleton so the hero never shifts height.
 - Camera rules per section: one region per frame (a task list, a rule card, the suggestion panel), not
   the whole app repeated.
 - Always captioned: "Illustrative interface… no live data, integrations or AI is connected."
@@ -251,11 +275,16 @@ The interface frames (`components/product/`) are the signature visual asset.
 
 ## 7. Motion
 
-| Token  | Value  | Applied                        |
-| ------ | ------ | ------------------------------ |
-| `fast` | 140 ms | Hover, focus, colour           |
-| `base` | 220 ms | Buttons, card lift, menu panel |
-| `slow` | 420 ms | Section reveals (planned)      |
+| Token    | Value  | Applied                                        |
+| -------- | ------ | ---------------------------------------------- |
+| `fast`   | 140 ms | Hover, focus, colour                           |
+| `base`   | 220 ms | Buttons, card lift, price swap, menu panel     |
+| `slow`   | 420 ms | Accordion, view switch, panel entrance         |
+| `slower` | 620 ms | Button shine sweep, accordion indicator rotate |
+
+View changes use `animate-view-in` (6 px rise, fade, 420 ms) via a keyed remount. Price changes use
+`animate-price-in` (0.32 em rise, fade, 3 px blur out, 220 ms). The ambient hero field is static — no
+pulse, no drift.
 
 Easing: `cubic-bezier(0.22, 1, 0.36, 1)` (exponential ease-out). No bounce, no overshoot, no parallax,
 no scroll-jacking. All durations collapse to ~0 under `prefers-reduced-motion: reduce`.
