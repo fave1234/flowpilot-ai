@@ -1,0 +1,181 @@
+/* ===========================================================================
+   FLOWPILOT AI — DESIGN TOKENS
+   Single source of truth for colour, type, space, radius, elevation, motion.
+   Every token below is exposed as a Tailwind v4 theme variable, so it can be
+   used as a utility (bg-ink-900, text-lead, rounded-xl, shadow-e2 ...).
+   =========================================================================== */
+
+@theme {
+  /* -------------------------------------------------------------------------
+     1. COLOUR
+     ink    — deep navy family: dark surfaces, headings, structural contrast
+     mist   — warm-neutral light family: canvas, borders, secondary text
+     brand  — electric violet: primary action, focus, accent
+     halo   — soft blue: supporting accent, illustrations, data marks
+     ------------------------------------------------------------------------- */
+
+  --color-ink-950: #080a14;
+  --color-ink-900: #101322;
+  --color-ink-800: #171b2d;
+  --color-ink-700: #222741;
+  --color-ink-600: #2f3550;
+  --color-ink-500: #444c6b;
+  --color-ink-400: #5b6280;
+
+  --color-mist-50: #fafafc;
+  --color-mist-100: #f7f7fa;
+  --color-mist-200: #edeef4;
+  --color-mist-300: #e1e3ec;
+  --color-mist-400: #cdd0dd;
+  --color-mist-500: #a9aec2;
+  --color-mist-600: #7c8298;
+  --color-mist-700: #5c6379;
+
+  --color-brand-50: #f4f2ff;
+  --color-brand-100: #eae7ff;
+  --color-brand-200: #d6d0ff;
+  --color-brand-300: #bcb3ff;
+  --color-brand-400: #9c8efb;
+  --color-brand-500: #7865f5;
+  --color-brand-600: #6a56ee;
+  --color-brand-700: #5743da;
+  --color-brand-800: #4633b0;
+  --color-brand-900: #2c2073;
+
+  --color-halo-100: #eef1ff;
+  --color-halo-200: #dce3fe;
+  --color-halo-300: #c7d2fe;
+  --color-halo-400: #a5b4fc;
+  --color-halo-500: #8b9bf8;
+
+  /* Feedback states — used for form validation and status messaging. */
+  --color-danger-50: #fdf2f3;
+  --color-danger-200: #f6cdd2;
+  --color-danger-600: #c0384a;
+  --color-danger-700: #a12c3c;
+  --color-success-50: #eefaf4;
+  --color-success-200: #c4ecd9;
+  --color-success-700: #1a6b52;
+
+  /* Semantic aliases — prefer these in components. */
+  --color-canvas: #f7f7fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #fafafc;
+  --color-line: #e5e7ef;
+  --color-line-strong: #d5d8e4;
+  --color-fg: #171827;
+  --color-fg-muted: #5c6379;
+  --color-fg-subtle: #666c80;
+  --color-fg-inverse: #f7f7fa;
+
+  /* -------------------------------------------------------------------------
+     2. TYPOGRAPHY
+     Manrope for display/headings (geometric, confident, slightly technical).
+     Inter for body/UI (neutral, highly legible at small sizes).
+     Display sizes are fluid: clamp(min, preferred + viewport, max).
+     ------------------------------------------------------------------------- */
+
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-display:
+    'Manrope Variable', 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --text-display-1: clamp(2.75rem, 1.85rem + 3.6vw, 4.5rem);
+  --text-display-1--line-height: 1.02;
+  --text-display-1--letter-spacing: -0.035em;
+  --text-display-1--font-weight: 700;
+
+  --text-display-2: clamp(2.25rem, 1.7rem + 2.3vw, 3.5rem);
+  --text-display-2--line-height: 1.05;
+  --text-display-2--letter-spacing: -0.032em;
+  --text-display-2--font-weight: 700;
+
+  --text-title-1: clamp(1.875rem, 1.45rem + 1.7vw, 2.75rem);
+  --text-title-1--line-height: 1.1;
+  --text-title-1--letter-spacing: -0.028em;
+  --text-title-1--font-weight: 700;
+
+  --text-title-2: clamp(1.5rem, 1.32rem + 0.8vw, 1.875rem);
+  --text-title-2--line-height: 1.2;
+  --text-title-2--letter-spacing: -0.022em;
+  --text-title-2--font-weight: 650;
+
+  --text-title-3: 1.25rem;
+  --text-title-3--line-height: 1.35;
+  --text-title-3--letter-spacing: -0.015em;
+  --text-title-3--font-weight: 600;
+
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-lead--line-height: 1.65;
+  --text-lead--letter-spacing: -0.005em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-body-sm: 0.9375rem;
+  --text-body-sm--line-height: 1.6;
+
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
+
+  --text-overline: 0.75rem;
+  --text-overline--line-height: 1;
+  --text-overline--letter-spacing: 0.14em;
+  --text-overline--font-weight: 600;
+
+  /* -------------------------------------------------------------------------
+     3. SPACING  (4px base scale, Tailwind default — extended with section rhythm)
+     ------------------------------------------------------------------------- */
+  --spacing-section-sm: 3.5rem;
+  --spacing-section: clamp(4rem, 3rem + 4vw, 7rem);
+  --spacing-section-lg: clamp(5rem, 3.5rem + 6vw, 9rem);
+  --spacing-gutter: clamp(1.25rem, 0.9rem + 1.6vw, 3rem);
+
+  /* Container widths */
+  --container-content: 75rem; /* 1200px — primary marketing grid */
+  --container-wide: 84rem; /* 1344px — full-bleed product frames */
+  --container-prose: 44rem; /* 704px — long-form reading measure */
+
+  /* -------------------------------------------------------------------------
+     4. RADIUS
+     Restrained: 10px controls, 14–24px surfaces, pill for metadata only.
+     ------------------------------------------------------------------------- */
+  --radius-xs: 0.375rem; /* 6 */
+  --radius-sm: 0.5rem; /* 8 */
+  --radius-md: 0.625rem; /* 10 — buttons, inputs */
+  --radius-lg: 0.875rem; /* 14 — cards */
+  --radius-xl: 1.125rem; /* 18 — feature panels */
+  --radius-2xl: 1.5rem; /* 24 — large surfaces */
+  --radius-3xl: 2rem; /* 32 — product frames */
+
+  /* -------------------------------------------------------------------------
+     5. ELEVATION
+     Layered, low-alpha ink shadows. Borders do most of the separation work.
+     ------------------------------------------------------------------------- */
+  --shadow-e1: 0 1px 2px rgb(16 19 34 / 0.05), 0 1px 3px rgb(16 19 34 / 0.04);
+  --shadow-e2: 0 2px 4px rgb(16 19 34 / 0.04), 0 12px 28px -12px rgb(16 19 34 / 0.14);
+  --shadow-e3: 0 4px 10px rgb(16 19 34 / 0.05), 0 28px 56px -24px rgb(16 19 34 / 0.22);
+  --shadow-frame: 0 1px 1px rgb(16 19 34 / 0.06), 0 40px 90px -40px rgb(16 19 34 / 0.4);
+
+  /* -------------------------------------------------------------------------
+     6. BREAKPOINTS
+     480 (large phone) · 768 (tablet portrait) · 1024 (tablet landscape)
+     1280 (desktop) · 1536 (wide desktop)
+     ------------------------------------------------------------------------- */
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  /* -------------------------------------------------------------------------
+     7. MOTION
+     Short, eased, purposeful. No bounce, no parallax, no decorative floats.
+     ------------------------------------------------------------------------- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+}
