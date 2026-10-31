@@ -13,7 +13,9 @@ export function FinalCta() {
         <Eyebrow tone="inverse" rule={false} className="justify-center">
           Ready when you are
         </Eyebrow>
-        <h2 className="mt-5 text-display-2 text-white">{finalCta.title}</h2>
+        <h2 className="mt-5 text-display-2 text-white">
+          Make room for <span className="gradient-text-inverse">the work that matters.</span>
+        </h2>
         <p className="mt-4 max-w-xl text-lead text-mist-400">{finalCta.description}</p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">

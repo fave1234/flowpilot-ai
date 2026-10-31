@@ -100,3 +100,52 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Small moments of motion and depth, shared by the interactive previews. */
+.gradient-text {
+  background: linear-gradient(110deg, #7353df, #494dc2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-text-inverse {
+  background: linear-gradient(110deg, #c6b7ff, #8e9bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.preview-enter {
+  animation: preview-enter 280ms ease-out both;
+}
+@keyframes preview-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cta-shine {
+  position: relative;
+  overflow: hidden;
+}
+.cta-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgb(255 255 255 / 0.22) 50%,
+    transparent 75%
+  );
+  transform: translateX(-130%);
+  transition: transform 600ms ease;
+}
+.cta-shine:hover::after,
+.cta-shine:focus-visible::after {
+  transform: translateX(130%);
+}
